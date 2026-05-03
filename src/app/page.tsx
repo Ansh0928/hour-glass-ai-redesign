@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSidebarOpen } from "@/components/app-sidebar";
+import { AnnouncementBar, SiteNav } from "@/components/site-nav";
 import type { ReactNode } from "react";
 import { animate, stagger, scrambleText } from "animejs";
 import {
@@ -85,44 +86,7 @@ function useStatsReveal() {
   }, []);
 }
 
-/* ─── Announcement bar ─── */
-function AnnouncementBar() {
-  return (
-    <div
-      style={{
-        background: "var(--green)",
-        color: "#fff",
-        textAlign: "center",
-        padding: "10px 24px",
-        fontSize: 13,
-        fontWeight: 500,
-        letterSpacing: "0.01em",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
-      }}
-    >
-      <span>Now in early access for Australian SMBs</span>
-      <span style={{ opacity: 0.6 }}>·</span>
-      <a
-        href="#"
-        style={{
-          color: "#fff",
-          fontWeight: 700,
-          textDecoration: "none",
-          display: "flex",
-          alignItems: "center",
-          gap: 4,
-        }}
-      >
-        Get access <span>→</span>
-      </a>
-    </div>
-  );
-}
-
-/* ─── Nav ─── */
+/* ─── Nav (extracted to @/components/site-nav) ─── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -155,6 +119,7 @@ function Nav() {
     { label: "What we do", href: "/what-we-do" },
     { label: "Our agents", href: "/agents" },
     { label: "Results", href: "/results" },
+    { label: "Team", href: "/#team" },
   ];
 
   return (
@@ -644,9 +609,9 @@ function FoundersSection() {
 
   return (
     <section
+      className="founders-section"
       style={{
         background: "var(--black)",
-        padding: "100px 40px",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
       }}
     >
@@ -679,17 +644,11 @@ function FoundersSection() {
           </h2>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 20,
-          }}
-        >
+        <div className="founders-grid">
           {founders.map((founder) => (
             <div
               key={founder.name}
-              className="reveal"
+              className="reveal founder-card"
               style={{
                 background: "rgba(255,255,255,0.025)",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -865,15 +824,7 @@ function HowItWorks() {
     >
       {/* Step tabs */}
       <div style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "0 40px",
-            display: "flex",
-            alignItems: "stretch",
-          }}
-        >
+        <div className="how-it-works-tabs-bar" style={{ maxWidth: 1280 }}>
           {steps.map((step, i) => {
             const isActive = i === activeStep;
             const circumference = 2 * Math.PI * 13;
@@ -972,17 +923,7 @@ function HowItWorks() {
       </div>
 
       {/* Content grid */}
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "72px 40px 96px",
-          display: "grid",
-          gridTemplateColumns: "5fr 7fr",
-          gap: 64,
-          alignItems: "start",
-        }}
-      >
+      <div className="how-it-works-grid" style={{ maxWidth: 1280 }}>
         {/* Left — text */}
         <div style={{ minWidth: 0 }}>
           {activeStep === 2 && (
@@ -1116,6 +1057,8 @@ function HowItWorks() {
                 background: "var(--surface-2)",
                 overflow: "hidden",
                 padding: "32px 28px",
+                /* Make bg-foreground/* Tailwind classes work inside this panel */
+                ["--color-foreground" as string]: "#2b390a",
               }}
             >
               <p
@@ -1134,24 +1077,32 @@ function HowItWorks() {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: 20,
-                  justifyContent: "flex-start",
+                  gap: 24,
+                  justifyContent: "center",
+                  maxWidth: 480,
+                  margin: "0 auto",
                 }}
               >
                 {(
                   [
-                    "pdf",
-                    "csv",
-                    "xls",
+                    "txt",
                     "doc",
-                    "json",
+                    "pdf",
+                    "md",
+                    "mdx",
+                    "xls",
+                    "csv",
+                    "zip",
+                    "tar",
                     "ppt",
+                    "pptx",
+                    "json",
+                    "css",
+                    "code",
+                    "png",
+                    "jpg",
                     "img",
                     "video",
-                    "code",
-                    "zip",
-                    "md",
-                    "txt",
                   ] as const
                 ).map((fmt) => (
                   <FileCard key={fmt} formatFile={fmt} />
@@ -2006,14 +1957,20 @@ export default function Home() {
     useHeroAnimations();
 
   const STATS = [
-    { value: "12 hrs", label: "saved per week, per owner" },
-    { value: "98%", label: "of tasks completed without human input" },
-    { value: "8 days", label: "average time to full ROI" },
-    { value: "200+", label: "Australian businesses on Hourglass" },
+    { value: "5+ hrs", label: "saved per person, per week — guaranteed" },
+    { value: "30 days", label: "from kickoff to first automation live" },
+    { value: "34,127+", label: "hours saved for clients" },
+    { value: "$2.1M+", label: "client revenue generated" },
   ];
 
   return (
     <div style={{ background: "var(--black)" }}>
+      <style>{`
+        .stats-section { padding: 0 40px 100px; }
+        @media (max-width: 767px) {
+          .stats-section { padding: 0 20px 64px; }
+        }
+      `}</style>
       <AnnouncementBar />
       <Nav />
 
@@ -2305,13 +2262,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 10,
-            }}
-          >
+          <div className="agents-grid">
             {(
               [
                 {
@@ -2488,21 +2439,13 @@ export default function Home() {
 
       {/* ─── STATS ─── */}
       <section
+        className="stats-section"
         style={{
           background: "var(--surface)",
-          padding: "0 40px 100px",
           borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            borderTop: "1px solid rgba(0,0,0,0.1)",
-          }}
-        >
+        <div className="homepage-stats-grid">
           {STATS.map((s, i) => (
             <div
               key={s.label}
@@ -2825,6 +2768,298 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── TEAM ─── */}
+      <section
+        id="team"
+        className="founders-section"
+        style={{
+          background: "var(--black)",
+          borderTop: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          {/* Section header */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              marginBottom: 72,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hourglass-logo.png"
+              alt="Hourglass AI"
+              style={{ height: 36, marginBottom: 28, opacity: 0.9 }}
+            />
+            <p
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--green-bright)",
+                marginBottom: 14,
+              }}
+            >
+              The team
+            </p>
+            <h2
+              style={{
+                fontSize: "clamp(28px, 3.5vw, 48px)",
+                fontWeight: 700,
+                letterSpacing: "-0.03em",
+                color: "white",
+                marginBottom: 16,
+                fontFamily: "var(--font-playfair, Georgia, serif)",
+                lineHeight: 1.05,
+                maxWidth: 600,
+              }}
+            >
+              Built by people who&rsquo;ve done it.
+            </h2>
+            <p
+              style={{
+                fontSize: 16,
+                color: "rgba(255,255,255,0.45)",
+                lineHeight: 1.75,
+                maxWidth: 520,
+              }}
+            >
+              Not consultants. Not an agency. Two founders who&rsquo;ve operated
+              at scale and are now building AI systems inside real businesses —
+              with their hands on the keyboard.
+            </p>
+          </div>
+
+          {/* Joint photo */}
+          <div style={{ marginBottom: 64 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://assets.startupdaily.net/wp-content/uploads/sites/7/2026/04/Elkins-Batko.jpg"
+              alt="Finlay Ekins and Michael Batko, co-founders of Hourglass AI"
+              style={{
+                width: "100%",
+                maxHeight: 420,
+                objectFit: "cover",
+                objectPosition: "top",
+                borderRadius: 16,
+                display: "block",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            />
+          </div>
+
+          {/* Founder cards */}
+          <div className="founders-grid">
+            {[
+              {
+                initials: "MB",
+                name: "Michael Batko",
+                role: "Co-founder",
+                bio: "8 years as CEO of Startmate — Australia's most active seed fund, backing 228 companies worth $4.5B. 2× founder, both acquired. Left in late 2025 to actually build the thing founders kept asking him about.",
+                credentials: [
+                  "CEO @ Startmate · 8 yrs",
+                  "2× founder, both acquired",
+                  "$4.5B portfolio",
+                  "PwC · AmEx · Expert360",
+                ],
+                quote:
+                  "Consulting firms gave them strategy decks. Nobody just built the thing.",
+                linkedin: "https://www.linkedin.com/in/batkomichael/",
+                website: "https://batko.ai",
+              },
+              {
+                initials: "FE",
+                name: "Finlay Ekins",
+                role: "Co-founder",
+                bio: "Dropped out of Mechatronics Engineering at Melbourne Uni to build. Two startups before Hourglass, including Holonomy. At 22, he's the one writing the systems.",
+                credentials: [
+                  "Founder @ Holonomy",
+                  "Mechatronics · U Melbourne",
+                  "AI & robotics builder",
+                  "2× founder",
+                ],
+                quote:
+                  "The businesses willing to do this will be light-years ahead of the ones sticking their heads in the sand.",
+                linkedin: "https://www.linkedin.com/in/finlay-ekins-016913242/",
+                website: undefined,
+              },
+            ].map((founder) => (
+              <div
+                key={founder.name}
+                style={{
+                  padding: "36px 36px",
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 16,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 20,
+                }}
+              >
+                {/* Top row: initials + name */}
+                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 12,
+                      background: "rgba(84,143,40,0.15)",
+                      border: "1px solid rgba(84,143,40,0.25)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color: "var(--green-bright)",
+                      letterSpacing: "-0.02em",
+                      fontFamily: "var(--font-playfair, Georgia, serif)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {founder.initials}
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 700,
+                        color: "white",
+                        letterSpacing: "-0.02em",
+                        marginBottom: 2,
+                      }}
+                    >
+                      {founder.name}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: 12,
+                        color: "rgba(255,255,255,0.35)",
+                        fontWeight: 500,
+                        letterSpacing: "0.04em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {founder.role}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bio */}
+                <p
+                  style={{
+                    fontSize: 14,
+                    color: "rgba(255,255,255,0.5)",
+                    lineHeight: 1.75,
+                  }}
+                >
+                  {founder.bio}
+                </p>
+
+                {/* Quote */}
+                <p
+                  style={{
+                    fontSize: 14,
+                    fontStyle: "italic",
+                    color: "rgba(255,255,255,0.65)",
+                    lineHeight: 1.65,
+                    borderLeft: "2px solid var(--green)",
+                    paddingLeft: 14,
+                  }}
+                >
+                  &ldquo;{founder.quote}&rdquo;
+                </p>
+
+                {/* Credentials */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {founder.credentials.map((c) => (
+                    <span
+                      key={c}
+                      style={{
+                        padding: "4px 12px",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: 40,
+                        fontSize: 11,
+                        fontWeight: 500,
+                        color: "rgba(255,255,255,0.4)",
+                        background: "rgba(255,255,255,0.04)",
+                        letterSpacing: "0.01em",
+                      }}
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    alignItems: "center",
+                    marginTop: 4,
+                  }}
+                >
+                  <a
+                    href={founder.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 7,
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      color: "rgba(255,255,255,0.75)",
+                      padding: "8px 16px",
+                      borderRadius: 8,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                    LinkedIn
+                  </a>
+                  {founder.website && (
+                    <a
+                      href={founder.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 5,
+                        color: "rgba(255,255,255,0.35)",
+                        padding: "8px 14px",
+                        borderRadius: 8,
+                        fontSize: 12,
+                        fontWeight: 500,
+                        textDecoration: "none",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                    >
+                      Website ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── FOOTER ─── */}
       <footer
         style={{
@@ -2834,14 +3069,7 @@ export default function Home() {
         }}
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
-              gap: 40,
-              marginBottom: 48,
-            }}
-          >
+          <div className="homepage-footer-grid">
             <div>
               <div style={{ marginBottom: 12 }}>
                 <Logo color="#fff" size={20} />
@@ -2929,15 +3157,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div
-            style={{
-              borderTop: "1px solid rgba(255,255,255,0.07)",
-              paddingTop: 24,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <div className="homepage-footer-bottom">
             <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>
               © 2025 Hourglass AI Pty Ltd · ABN 00 000 000 000 · Sydney,
               Australia
