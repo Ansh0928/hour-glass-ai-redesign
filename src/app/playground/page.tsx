@@ -25,23 +25,51 @@ export default function Playground() {
   return (
     <div
       style={{
-        display: "flex",
         minHeight: "100vh",
+        background: "#0a0a0a",
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--color-bg, #fdfefb)",
-        padding: "48px 24px",
-        ["--color-foreground" as string]: "#0a0a0a",
+        padding: "80px 24px",
+        gap: 48,
       }}
     >
+      <div style={{ textAlign: "center" }}>
+        <p
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.3)",
+            marginBottom: 12,
+          }}
+        >
+          File Types
+        </p>
+        <h1
+          style={{
+            fontSize: "clamp(28px, 4vw, 48px)",
+            fontWeight: 700,
+            color: "#fff",
+            letterSpacing: "-0.03em",
+            lineHeight: 1.1,
+            margin: 0,
+          }}
+        >
+          Every format, handled.
+        </h1>
+      </div>
+
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: 24,
+          gap: 20,
           width: "100%",
-          maxWidth: 576,
+          maxWidth: 560,
         }}
       >
         {formats.map((format) => (
