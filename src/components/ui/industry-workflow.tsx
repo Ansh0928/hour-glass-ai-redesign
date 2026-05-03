@@ -254,8 +254,16 @@ const stepsVariants = {
 
 const stepVariant = {
   hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.28, ease: "easeOut" } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.16, ease: "easeIn" } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.28, ease: "easeOut" as const },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    transition: { duration: 0.16, ease: "easeIn" as const },
+  },
 };
 
 export function IndustryWorkflow() {
@@ -590,10 +598,7 @@ export function IndustryWorkflow() {
                             flexShrink: 0,
                           }}
                         >
-                          <Icon
-                            className="h-4 w-4"
-                            style={{ color: "rgba(255,255,255,0.55)" }}
-                          />
+                          <Icon className="h-4 w-4 text-white/55" />
                         </div>
 
                         {/* Title & description */}
