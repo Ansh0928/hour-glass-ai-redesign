@@ -29,6 +29,7 @@ import { Testimonials as BentoTestimonials } from "@/components/ui/testimonial";
 import CpuArchitecture from "@/components/ui/cpu-architecture";
 import MagnifiedBento from "@/components/ui/magnified-bento";
 import Plan from "@/components/ui/agent-plan";
+import VectorPad from "@/components/ui/vector-pad";
 import { SystemsOrchestration } from "@/components/ui/systems-orchestration";
 import { FileCard } from "@/components/ui/file-card-collections";
 import { IndustryWorkflow } from "@/components/ui/industry-workflow";
@@ -579,172 +580,6 @@ function OriginQuote() {
   );
 }
 
-/* ─── Founders ─── */
-function FoundersSection() {
-  const founders = [
-    {
-      initials: "MB",
-      name: "Michael Batko",
-      role: "Co-founder & CEO",
-      bio: "Ran Startmate for 8 years — Australia's most active startup accelerator. Coached 300+ founders across a $4.5B portfolio. Left to build the thing nobody else was building.",
-      credentials: [
-        "CEO, Startmate · 8 years",
-        "300+ startups coached",
-        "$4.5B portfolio managed",
-        "2× founder, both acquired",
-      ],
-    },
-    {
-      initials: "FE",
-      name: "Finlay Ekins",
-      role: "Co-founder",
-      bio: "Builder first. Believes AI is new enough that anyone willing to invest the effort can become an expert — regardless of background or age. Ships real systems in real businesses.",
-      credentials: [
-        "AI systems builder",
-        "No discovery phases — ships in weeks",
-        "22 years old",
-      ],
-    },
-  ];
-
-  return (
-    <section
-      className="founders-section"
-      style={{
-        background: "var(--black)",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
-      }}
-    >
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div className="reveal" style={{ marginBottom: 64 }}>
-          <p
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: "var(--green-bright)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              marginBottom: 14,
-            }}
-          >
-            The team
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair, Georgia, serif)",
-              fontSize: "clamp(32px, 4vw, 56px)",
-              fontWeight: 700,
-              color: "#fff",
-              letterSpacing: "-0.04em",
-              lineHeight: 1.05,
-              maxWidth: 520,
-            }}
-          >
-            Built by people who&rsquo;ve done it.
-          </h2>
-        </div>
-
-        <div className="founders-grid">
-          {founders.map((founder) => (
-            <div
-              key={founder.name}
-              className="reveal founder-card"
-              style={{
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 16,
-                padding: "40px",
-              }}
-            >
-              <div
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  background: "rgba(22,128,60,0.2)",
-                  border: "1px solid rgba(22,128,60,0.3)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 24,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 17,
-                    fontWeight: 700,
-                    color: "var(--green)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {founder.initials}
-                </span>
-              </div>
-
-              <h3
-                style={{
-                  fontSize: 22,
-                  fontWeight: 700,
-                  color: "#fff",
-                  letterSpacing: "-0.03em",
-                  marginBottom: 4,
-                }}
-              >
-                {founder.name}
-              </h3>
-              <p
-                style={{
-                  fontSize: 13,
-                  color: "var(--green)",
-                  fontWeight: 600,
-                  marginBottom: 18,
-                  letterSpacing: "0.01em",
-                }}
-              >
-                {founder.role}
-              </p>
-              <p
-                style={{
-                  fontSize: 15,
-                  color: "rgba(255,255,255,0.42)",
-                  lineHeight: 1.7,
-                  marginBottom: 28,
-                }}
-              >
-                {founder.bio}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-                {founder.credentials.map((c) => (
-                  <div
-                    key={c}
-                    style={{ display: "flex", alignItems: "center", gap: 10 }}
-                  >
-                    <span
-                      style={{
-                        width: 4,
-                        height: 4,
-                        borderRadius: "50%",
-                        background: "var(--green)",
-                        flexShrink: 0,
-                        opacity: 0.7,
-                      }}
-                    />
-                    <span
-                      style={{ fontSize: 13, color: "rgba(255,255,255,0.32)" }}
-                    >
-                      {c}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─── How It Works (Adaline-style) ─── */
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
@@ -1045,7 +880,7 @@ function HowItWorks() {
                 border: "1px solid var(--border)",
               }}
             >
-              <Plan />
+              <VectorPad />
             </div>
           )}
           {activeStep === 1 && (
@@ -1053,34 +888,48 @@ function HowItWorks() {
               style={{
                 width: "100%",
                 borderRadius: 16,
-                border: "1px solid var(--border)",
-                background: "var(--surface-2)",
+                background: "var(--black)",
+                border: "1px solid rgba(255,255,255,0.07)",
                 overflow: "hidden",
                 padding: "32px 28px",
-                /* Make bg-foreground/* Tailwind classes work inside this panel */
-                ["--color-foreground" as string]: "#2b390a",
               }}
             >
+              {/* dark-card + white placeholder art overrides */}
+              <style>{`
+                .build-cards [aria-hidden] > div:last-child {
+                  background: rgba(255,255,255,0.06) !important;
+                  box-shadow: 0 0 0 1px rgba(255,255,255,0.07) !important;
+                }
+                .build-cards .bg-foreground\\/5  { background-color: rgba(255,255,255,0.05) !important; }
+                .build-cards .bg-foreground\\/10 { background-color: rgba(255,255,255,0.10) !important; }
+                .build-cards .bg-foreground\\/15 { background-color: rgba(255,255,255,0.15) !important; }
+                .build-cards .bg-foreground\\/20 { background-color: rgba(255,255,255,0.20) !important; }
+                .build-cards .text-foreground\\/30 { color: rgba(255,255,255,0.30) !important; }
+                .build-cards .text-foreground\\/40 { color: rgba(255,255,255,0.40) !important; }
+                .build-cards .ring-border { --tw-ring-color: transparent !important; }
+              `}</style>
+
               <p
                 style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "var(--text-dimmer)",
-                  letterSpacing: "0.08em",
+                  fontSize: 10,
+                  fontWeight: 500,
+                  letterSpacing: "0.14em",
                   textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.28)",
                   marginBottom: 24,
+                  fontFamily: "var(--font-inter, monospace)",
                 }}
               >
-                Files your agents handle
+                18 file types · zero configuration
               </p>
+
               <div
+                className="build-cards"
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: 24,
+                  gap: 16,
                   justifyContent: "center",
-                  maxWidth: 480,
-                  margin: "0 auto",
                 }}
               >
                 {(
@@ -2491,22 +2340,14 @@ export default function Home() {
 
       {/* ─── SYSTEMS ─── */}
       <section
+        className="hp-section-padding"
         style={{
           background: "var(--black)",
-          padding: "120px 40px",
           borderBottom: "1px solid rgba(255,255,255,0.07)",
         }}
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              marginBottom: 64,
-              gap: 40,
-            }}
-          >
+          <div className="systems-header">
             <div>
               <p
                 style={{
@@ -2552,9 +2393,6 @@ export default function Home() {
           <SystemsOrchestration />
         </div>
       </section>
-
-      {/* ─── FOUNDERS ─── */}
-      <FoundersSection />
 
       {/* ─── PROGRAM ─── */}
       <section
@@ -2858,13 +2696,13 @@ export default function Home() {
               {
                 initials: "MB",
                 name: "Michael Batko",
-                role: "Co-founder",
-                bio: "8 years as CEO of Startmate — Australia's most active seed fund, backing 228 companies worth $4.5B. 2× founder, both acquired. Left in late 2025 to actually build the thing founders kept asking him about.",
+                role: "Co-founder & CEO",
+                bio: "Ran Startmate for 8 years — Australia's most active startup accelerator. Coached 300+ founders across a $4.5B portfolio. Left to build the thing nobody else was building.",
                 credentials: [
-                  "CEO @ Startmate · 8 yrs",
+                  "CEO, Startmate · 8 years",
+                  "300+ startups coached",
+                  "$4.5B portfolio managed",
                   "2× founder, both acquired",
-                  "$4.5B portfolio",
-                  "PwC · AmEx · Expert360",
                 ],
                 quote:
                   "Consulting firms gave them strategy decks. Nobody just built the thing.",
@@ -2875,17 +2713,15 @@ export default function Home() {
                 initials: "FE",
                 name: "Finlay Ekins",
                 role: "Co-founder",
-                bio: "Dropped out of Mechatronics Engineering at Melbourne Uni to build. Two startups before Hourglass, including Holonomy. At 22, he's the one writing the systems.",
+                bio: "Builder first. Believes AI is new enough that anyone willing to invest the effort can become an expert — regardless of background or age. Ships real systems in real businesses.",
                 credentials: [
-                  "Founder @ Holonomy",
-                  "Mechatronics · U Melbourne",
-                  "AI & robotics builder",
-                  "2× founder",
+                  "AI systems builder",
+                  "No discovery phases — ships in weeks",
                 ],
                 quote:
                   "The businesses willing to do this will be light-years ahead of the ones sticking their heads in the sand.",
                 linkedin: "https://www.linkedin.com/in/finlay-ekins-016913242/",
-                website: undefined,
+                website: "https://www.finlayekins.com",
               },
             ].map((founder) => (
               <div
