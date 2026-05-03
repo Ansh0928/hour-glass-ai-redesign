@@ -31,7 +31,7 @@ export default function Playground() {
         justifyContent: "center",
         background: "var(--color-bg, #fdfefb)",
         padding: "48px 24px",
-        ["--color-foreground" as string]: "#2b390a",
+        ["--color-foreground" as string]: "#0a0a0a",
       }}
     >
       <div
