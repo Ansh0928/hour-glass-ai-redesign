@@ -1,5 +1,4 @@
 import { FileCard } from "@/components/ui/file-card-collections";
-import { AnnouncementBar, SiteNav } from "@/components/site-nav";
 
 const formats = [
   "txt",
@@ -37,14 +36,12 @@ export default function Playground() {
         .pg-root {
           min-height: 100vh;
           background: #0a0a0a;
-          background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.055) 1px, transparent 0);
-          background-size: 28px 28px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           padding: 96px 32px;
-          gap: 56px;
+          gap: 52px;
         }
         .pg-header {
           text-align: center;
