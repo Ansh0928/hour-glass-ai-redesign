@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors — auto-synced from DESIGN.md */
+  --color-bg: #fdfefb;
+  --color-surface: #f4f7ee;
+  --color-text: #2b390a;
+  --color-primary: #548f28;
+  --color-secondary: #4a6d47;
+  --color-light: #eef6dc;
+  --color-light-hover: #ddeabd;
+  --color-border: #e9ede9;
+  --color-hero-bg: #1a2a0e;
+  /* shadcn compatibility */
+  --color-background: #e8e5df;
+  --color-foreground: #1a1a1a;
+  --color-card: #f0ede8;
+  --color-card-foreground: #1a1a1a;
+  --color-muted: #e0ddd7;
+  --color-muted-foreground: #6b6561;
+  --color-border: #e9ede9;
+  --color-input: #e9ede9;
+  --color-ring: #548f28;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1a1a1a;
+  --color-accent: #ddeabd;
+  --color-accent-foreground: #2b390a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary-foreground: #ffffff;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  /* sidebar */
+  --color-sidebar: #f4f7ee;
+  --color-sidebar-foreground: #2b390a;
+  --color-sidebar-primary: #548f28;
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: #ddeabd;
+  --color-sidebar-accent-foreground: #2b390a;
+  --color-sidebar-border: #e9ede9;
+  --color-sidebar-ring: #548f28;
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  /* Rounded */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+:root {
+  /* DOSS-style tokens for Hourglass */
+  --black: #0a0a0a;
+  --surface: #e8e5df;
+  --surface-2: #f0ede8;
+  --white: #ffffff;
+  --text: #1a1a1a;
+  --text-dim: #6b6561;
+  --text-dimmer: #9b9690;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.06);
+  --green: #16803c;
+  --green-bright: #22c55e;
+  --green-dim: rgba(22, 128, 60, 0.12);
+  --radius: 8px;
+
+  /* Legacy compat for inner pages */
+  --bg: #f0ede8;
+  --hero-bg: #0a0a0a;
+  --gmid: #6b6561;
+  --glight: #e8e5df;
+  --glight2: #dddad4;
+  --border-old: rgba(0, 0, 0, 0.09);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-inter, "Inter", system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Story focus */
+.story-item {
+  opacity: 0.25;
+  transition: opacity 0.4s ease;
+}
+.story-item.focused {
+  opacity: 1;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+@keyframes marquee-vertical-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll var(--duration) linear infinite;
+}
+.animate-marquee-vertical {
+  animation: marquee-vertical-scroll var(--duration) linear infinite;
+}
+
+@keyframes logo-move-x {
+  from {
+    transform: translateX(var(--move-x-from));
+  }
+  to {
+    transform: translateX(var(--move-x-to));
+  }
+}
