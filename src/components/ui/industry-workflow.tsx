@@ -294,6 +294,7 @@ export function IndustryWorkflow() {
           </p>
           <h2
             style={{
+              fontFamily: "var(--font-playfair, Georgia, serif)",
               fontSize: "clamp(30px,4vw,52px)",
               fontWeight: 700,
               color: "#fff",

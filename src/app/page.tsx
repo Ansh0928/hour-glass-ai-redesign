@@ -150,7 +150,12 @@ function Nav() {
     };
   }, []);
 
-  const links = ["Product", "What we do", "Our agents", "Results"];
+  const links = [
+    { label: "Product", href: "/" },
+    { label: "What we do", href: "/what-we-do" },
+    { label: "Our agents", href: "/agents" },
+    { label: "Results", href: "/results" },
+  ];
 
   return (
     <>
@@ -186,9 +191,9 @@ function Nav() {
         {!isMobile && (
           <div style={{ display: "flex", gap: 2 }}>
             {links.map((l) => (
-              <a
-                key={l}
-                href="#"
+              <Link
+                key={l.label}
+                href={l.href}
                 style={{
                   fontSize: 14,
                   fontWeight: 450,
@@ -203,8 +208,8 @@ function Nav() {
                   (e.currentTarget.style.color = "rgba(255,255,255,0.55)")
                 }
               >
-                {l}
-              </a>
+                {l.label}
+              </Link>
             ))}
           </div>
         )}
@@ -362,9 +367,9 @@ function Nav() {
           }}
         >
           {links.map((l) => (
-            <a
-              key={l}
-              href="#"
+            <Link
+              key={l.label}
+              href={l.href}
               onClick={() => setMenuOpen(false)}
               style={{
                 fontSize: 22,
@@ -376,8 +381,8 @@ function Nav() {
                 transition: "color 0.15s",
               }}
             >
-              {l}
-            </a>
+              {l.label}
+            </Link>
           ))}
           <div
             style={{
@@ -654,6 +659,7 @@ function FoundersSection() {
           </p>
           <h2
             style={{
+              fontFamily: "var(--font-playfair, Georgia, serif)",
               fontSize: "clamp(32px, 4vw, 56px)",
               fontWeight: 700,
               color: "#fff",
@@ -1003,6 +1009,7 @@ function HowItWorks() {
           )}
           <h2
             style={{
+              fontFamily: "var(--font-playfair, Georgia, serif)",
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontWeight: 700,
               color: "var(--text)",
@@ -2084,6 +2091,7 @@ export default function Home() {
           <h1
             ref={h1Ref}
             style={{
+              fontFamily: "var(--font-playfair, Georgia, serif)",
               fontSize: "clamp(56px, 9vw, 108px)",
               fontWeight: 700,
               color: "#ffffff",
@@ -2265,6 +2273,7 @@ export default function Home() {
             </p>
             <h2
               style={{
+                fontFamily: "var(--font-playfair, Georgia, serif)",
                 fontSize: "clamp(32px, 4vw, 54px)",
                 fontWeight: 700,
                 color: "var(--text)",
@@ -2563,6 +2572,7 @@ export default function Home() {
               </p>
               <h2
                 style={{
+                  fontFamily: "var(--font-playfair, Georgia, serif)",
                   fontSize: "clamp(32px, 4vw, 56px)",
                   fontWeight: 700,
                   color: "#fff",
@@ -2845,20 +2855,30 @@ export default function Home() {
               {
                 heading: "Product",
                 links: [
-                  "What we do",
-                  "Our agents",
-                  "Results",
-                  "Pricing",
-                  "Changelog",
+                  { label: "What we do", href: "/what-we-do" },
+                  { label: "Our agents", href: "/agents" },
+                  { label: "Results", href: "/results" },
+                  { label: "Pricing", href: "#" },
+                  { label: "Changelog", href: "#" },
                 ],
               },
               {
                 heading: "Company",
-                links: ["About", "Blog", "Careers", "Contact"],
+                links: [
+                  { label: "About", href: "#" },
+                  { label: "Blog", href: "#" },
+                  { label: "Careers", href: "#" },
+                  { label: "Contact", href: "#" },
+                ],
               },
               {
                 heading: "Legal",
-                links: ["Privacy Policy", "Terms", "Security", "Cookies"],
+                links: [
+                  { label: "Privacy Policy", href: "#" },
+                  { label: "Terms", href: "#" },
+                  { label: "Security", href: "#" },
+                  { label: "Cookies", href: "#" },
+                ],
               },
             ].map((col) => (
               <div key={col.heading}>
@@ -2878,9 +2898,9 @@ export default function Home() {
                   style={{ display: "flex", flexDirection: "column", gap: 10 }}
                 >
                   {col.links.map((link) => (
-                    <a
-                      key={link}
-                      href="#"
+                    <Link
+                      key={link.label}
+                      href={link.href}
                       style={{
                         fontSize: 13,
                         color: "rgba(255,255,255,0.4)",
@@ -2894,8 +2914,8 @@ export default function Home() {
                         (e.currentTarget.style.color = "rgba(255,255,255,0.4)")
                       }
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   ))}
                 </div>
               </div>
