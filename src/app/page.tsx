@@ -249,6 +249,10 @@ function Nav() {
                 fontWeight: 450,
                 color: "rgba(255,255,255,0.55)",
                 textDecoration: "none",
+                padding: "10px 12px",
+                minHeight: 44,
+                display: "inline-flex",
+                alignItems: "center",
               }}
             >
               Sign in
@@ -399,7 +403,10 @@ function Nav() {
                 fontSize: 15,
                 color: "rgba(255,255,255,0.45)",
                 textDecoration: "none",
-                padding: "8px 0",
+                padding: "12px 0",
+                minHeight: 44,
+                display: "inline-flex",
+                alignItems: "center",
               }}
             >
               Sign in
