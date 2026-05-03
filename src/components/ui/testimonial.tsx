@@ -248,7 +248,7 @@ export function Testimonials() {
 
           {/* Column 2 — middle */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[t2, t3, t4].map((t, idx) => (
+            {[t2, t3].map((t, idx) => (
               <TimelineContent
                 key={t.name}
                 animationNum={idx + 2}
@@ -295,55 +295,14 @@ export function Testimonials() {
             ))}
           </div>
 
-          {/* Column 3 */}
+          {/* Column 3 — t4 only, full-height featured card */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <TimelineContent
-              animationNum={5}
+              animationNum={4}
               customVariants={revealVariants}
               timelineRef={sectionRef}
               style={{
-                flex: "3",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 16,
-                padding: 24,
-              }}
-            >
-              <Stars />
-              <p
-                style={{
-                  fontSize: 14,
-                  color: "#fff",
-                  lineHeight: 1.65,
-                  marginBottom: 16,
-                }}
-              >
-                &ldquo;{t3.quote}&rdquo;
-              </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <Initials name={t3.name} />
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 13, color: "#fff" }}>
-                    {t3.name}
-                  </div>
-                  <div
-                    style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}
-                  >
-                    {t3.company}
-                  </div>
-                </div>
-              </div>
-            </TimelineContent>
-
-            <TimelineContent
-              animationNum={6}
-              customVariants={revealVariants}
-              timelineRef={sectionRef}
-              style={{
-                flex: "7",
+                flex: 1,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",

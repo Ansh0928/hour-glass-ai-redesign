@@ -33,47 +33,45 @@ interface Task {
 const initialTasks: Task[] = [
   {
     id: "1",
-    title: "Research Project Requirements",
+    title: "Email & inbox analysis",
     description:
-      "Gather all necessary information about project scope and requirements",
-    status: "in-progress",
+      "Map volume, response times, and recurring patterns in the inbox",
+    status: "completed",
     priority: "high",
     level: 0,
     dependencies: [],
     subtasks: [
       {
         id: "1.1",
-        title: "Interview stakeholders",
+        title: "Count daily inbound volume",
         description:
-          "Conduct interviews with key stakeholders to understand needs",
+          "Measure average emails received per day across last 90 days",
         status: "completed",
         priority: "high",
-        tools: ["communication-agent", "meeting-scheduler"],
+        tools: ["gmail", "outlook"],
       },
       {
         id: "1.2",
-        title: "Review existing documentation",
-        description:
-          "Go through all available documentation and extract requirements",
-        status: "in-progress",
-        priority: "medium",
-        tools: ["file-system", "browser"],
+        title: "Identify repeat query types",
+        description: "Classify recurring email subjects that can be automated",
+        status: "completed",
+        priority: "high",
+        tools: ["gmail", "classifier"],
       },
       {
         id: "1.3",
-        title: "Compile findings report",
-        description:
-          "Create a comprehensive report of all gathered information",
-        status: "need-help",
+        title: "Measure average response time",
+        description: "Calculate how long replies take and flag bottlenecks",
+        status: "completed",
         priority: "medium",
-        tools: ["file-system", "markdown-processor"],
+        tools: ["gmail", "analytics"],
       },
     ],
   },
   {
     id: "2",
-    title: "Design System Architecture",
-    description: "Create the overall system architecture based on requirements",
+    title: "Invoice & payment review",
+    description: "Assess manual steps in the billing and collections workflow",
     status: "in-progress",
     priority: "high",
     level: 0,
@@ -81,136 +79,87 @@ const initialTasks: Task[] = [
     subtasks: [
       {
         id: "2.1",
-        title: "Define component structure",
-        description: "Map out all required components and their interactions",
-        status: "pending",
+        title: "Map invoice creation steps",
+        description:
+          "Document every manual action between job completion and invoice sent",
+        status: "completed",
         priority: "high",
-        tools: ["architecture-planner", "diagramming-tool"],
+        tools: ["xero", "myob"],
       },
       {
         id: "2.2",
-        title: "Create data flow diagrams",
+        title: "Identify overdue patterns",
         description:
-          "Design diagrams showing how data will flow through the system",
-        status: "pending",
-        priority: "medium",
-        tools: ["diagramming-tool", "file-system"],
+          "Find which clients and amounts most frequently go overdue",
+        status: "in-progress",
+        priority: "high",
+        tools: ["xero", "stripe"],
       },
       {
         id: "2.3",
-        title: "Document API specifications",
-        description: "Write detailed specifications for all APIs in the system",
+        title: "Calculate cash-flow delay",
+        description: "Quantify average days from job done to payment received",
         status: "pending",
-        priority: "high",
-        tools: ["api-designer", "openapi-generator"],
+        priority: "medium",
+        tools: ["xero", "analytics"],
       },
     ],
   },
   {
     id: "3",
-    title: "Implementation Planning",
-    description: "Create a detailed plan for implementing the system",
+    title: "Scheduling & calendar audit",
+    description:
+      "Identify gaps and manual overhead in how appointments are booked",
     status: "pending",
     priority: "medium",
-    level: 1,
-    dependencies: ["1", "2"],
+    level: 0,
+    dependencies: [],
     subtasks: [
       {
         id: "3.1",
-        title: "Resource allocation",
-        description: "Determine required resources and allocate them to tasks",
+        title: "Count booking touchpoints",
+        description: "Map every step from enquiry to confirmed appointment",
         status: "pending",
         priority: "medium",
-        tools: ["project-manager", "resource-calculator"],
+        tools: ["calendly", "google-calendar"],
       },
       {
         id: "3.2",
-        title: "Timeline development",
-        description: "Create a timeline with milestones and deadlines",
+        title: "Measure double-booking rate",
+        description: "Find how often conflicts occur and how they're resolved",
         status: "pending",
         priority: "high",
-        tools: ["timeline-generator", "gantt-chart-creator"],
-      },
-      {
-        id: "3.3",
-        title: "Risk assessment",
-        description:
-          "Identify potential risks and develop mitigation strategies",
-        status: "pending",
-        priority: "medium",
-        tools: ["risk-analyzer"],
+        tools: ["calendly", "servicem8"],
       },
     ],
   },
   {
     id: "4",
-    title: "Development Environment Setup",
-    description: "Set up all necessary tools and environments for development",
-    status: "in-progress",
-    priority: "high",
+    title: "Follow-up & lead tracking",
+    description:
+      "Assess how leads and quotes are followed up after initial contact",
+    status: "pending",
+    priority: "medium",
     level: 0,
     dependencies: [],
     subtasks: [
       {
         id: "4.1",
-        title: "Install development tools",
+        title: "Map post-quote follow-up steps",
         description:
-          "Set up IDEs, version control, and other necessary development tools",
+          "Document current process from quote sent to client response",
         status: "pending",
         priority: "high",
-        tools: ["shell", "package-manager"],
+        tools: ["gmail", "crm"],
       },
       {
         id: "4.2",
-        title: "Configure CI/CD pipeline",
-        description: "Set up continuous integration and deployment pipelines",
-        status: "pending",
-        priority: "medium",
-        tools: ["github-actions", "gitlab-ci", "jenkins-connector"],
-      },
-      {
-        id: "4.3",
-        title: "Set up testing framework",
-        description: "Configure automated testing frameworks for the project",
-        status: "pending",
-        priority: "high",
-        tools: ["test-runner", "shell"],
-      },
-    ],
-  },
-  {
-    id: "5",
-    title: "Initial Development Sprint",
-    description: "Execute the first development sprint based on the plan",
-    status: "pending",
-    priority: "medium",
-    level: 1,
-    dependencies: ["4"],
-    subtasks: [
-      {
-        id: "5.1",
-        title: "Implement core features",
+        title: "Identify dropped leads",
         description:
-          "Develop the essential features identified in the requirements",
+          "Find quotes that went unanswered and were never followed up",
         status: "pending",
         priority: "high",
-        tools: ["code-assistant", "github", "file-system", "shell"],
-      },
-      {
-        id: "5.2",
-        title: "Perform unit testing",
-        description: "Create and execute unit tests for implemented features",
-        status: "pending",
-        priority: "medium",
-        tools: ["test-runner", "code-coverage-analyzer"],
-      },
-      {
-        id: "5.3",
-        title: "Document code",
-        description: "Create documentation for the implemented code",
-        status: "pending",
-        priority: "low",
-        tools: ["documentation-generator", "markdown-processor"],
+        tools: ["gmail", "analytics"],
       },
     ],
   },
@@ -361,7 +310,7 @@ export default function Plan() {
       opacity: 1,
       height: "auto" as const,
       overflow: "visible" as const,
-      transition: { duration: 0.25, ease: [0.2, 0.65, 0.3, 0.9] },
+      transition: { duration: 0.25, ease: EASE_SMOOTH },
     },
   };
 
@@ -371,25 +320,34 @@ export default function Plan() {
       scale: prefersReducedMotion ? 1 : [1, 1.08, 1],
       transition: {
         duration: 0.35,
-        ease: [0.34, 1.56, 0.64, 1],
+        ease: EASE_SPRING,
       },
     },
   };
 
   return (
-    <div className="bg-background text-foreground h-full overflow-auto p-2">
-      <motion.div
-        className="bg-card border-border rounded-lg border shadow overflow-hidden"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.3, ease: [0.2, 0.65, 0.3, 0.9] },
+    <div
+      style={{
+        height: "100%",
+        overflow: "hidden",
+        background: "var(--surface-2)",
+        padding: 8,
+      }}
+    >
+      <div
+        style={{
+          background: "var(--surface-2)",
+          border: "1px solid var(--border)",
+          borderRadius: 12,
+          overflow: "hidden",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <LayoutGroup>
-          <div className="p-4 overflow-hidden">
-            <ul className="space-y-1 overflow-hidden">
+          <div style={{ padding: 16, overflowY: "auto", flex: 1 }}>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {tasks.map((task, index) => {
                 const isExpanded = expandedTasks.includes(task.id);
                 const isCompleted = task.status === "completed";
@@ -672,7 +630,7 @@ export default function Plan() {
             </ul>
           </div>
         </LayoutGroup>
-      </motion.div>
+      </div>
     </div>
   );
 }

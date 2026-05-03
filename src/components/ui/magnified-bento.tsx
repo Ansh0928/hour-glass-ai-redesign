@@ -234,12 +234,13 @@ const MagnifiedBento = () => {
             marginBottom: 4,
           }}
         >
-          Full Audit Trail
+          We value — nothing ever gets forgotten
         </div>
         <div
           style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.55 }}
         >
-          Every action is logged. Drag the lens to inspect any item.
+          Easy to lose sight of what you&rsquo;ve built as things pile up — we
+          keep the full picture, so nothing ever gets forgotten.
         </div>
       </div>
     </div>

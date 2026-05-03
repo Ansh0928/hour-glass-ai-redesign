@@ -10,10 +10,8 @@ import {
   IconMail,
   IconInvoice,
   IconCalendar,
-  IconQuote,
   IconBell,
   IconFolder,
-  IconBuilding,
   IconZap,
   IconShield,
   IconLock,
@@ -30,6 +28,9 @@ import { Testimonials as BentoTestimonials } from "@/components/ui/testimonial";
 import CpuArchitecture from "@/components/ui/cpu-architecture";
 import MagnifiedBento from "@/components/ui/magnified-bento";
 import Plan from "@/components/ui/agent-plan";
+import { SystemsOrchestration } from "@/components/ui/systems-orchestration";
+import { FileCard } from "@/components/ui/file-card-collections";
+import { IndustryWorkflow } from "@/components/ui/industry-workflow";
 
 /* ─── anime.js scroll reveal with stagger ─── */
 function useReveal() {
@@ -125,6 +126,8 @@ function AnnouncementBar() {
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
   const { open: openSidebar } = useSidebarOpen();
 
@@ -135,117 +138,291 @@ function Nav() {
       setHidden(y > lastY.current && y > 120);
       lastY.current = y;
     }
+    function onResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    onResize();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   const links = ["Product", "What we do", "Our agents", "Results"];
 
   return (
-    <nav
-      style={{
-        position: "fixed",
-        top: 34,
-        left: 0,
-        right: 0,
-        zIndex: 200,
-        height: 60,
-        display: "flex",
-        alignItems: "center",
-        padding: "0 32px",
-        justifyContent: "space-between",
-        background: scrolled ? "rgba(10,10,10,0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: scrolled
-          ? "1px solid rgba(255,255,255,0.07)"
-          : "1px solid transparent",
-        transform: hidden ? "translateY(calc(-100% - 34px))" : "translateY(0)",
-        transition:
-          "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
-      }}
-    >
-      <Link href="/" style={{ textDecoration: "none" }}>
-        <Logo color="#fff" size={22} />
-      </Link>
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 34,
+          left: 0,
+          right: 0,
+          zIndex: 200,
+          height: 60,
+          display: "flex",
+          alignItems: "center",
+          padding: "0 20px",
+          justifyContent: "space-between",
+          background: scrolled ? "rgba(10,10,10,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled
+            ? "1px solid rgba(255,255,255,0.07)"
+            : "1px solid transparent",
+          transform: hidden
+            ? "translateY(calc(-100% - 34px))"
+            : "translateY(0)",
+          transition:
+            "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
+        }}
+      >
+        <Link href="/" style={{ textDecoration: "none" }}>
+          <Logo color="#fff" size={22} />
+        </Link>
 
-      <div style={{ display: "flex", gap: 2 }}>
-        {links.map((l) => (
-          <a
-            key={l}
-            href="#"
+        {/* Desktop centre links */}
+        {!isMobile && (
+          <div style={{ display: "flex", gap: 2 }}>
+            {links.map((l) => (
+              <a
+                key={l}
+                href="#"
+                style={{
+                  fontSize: 14,
+                  fontWeight: 450,
+                  color: "rgba(255,255,255,0.55)",
+                  textDecoration: "none",
+                  padding: "6px 14px",
+                  borderRadius: 6,
+                  transition: "color 0.15s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = "rgba(255,255,255,0.55)")
+                }
+              >
+                {l}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {/* Desktop right actions */}
+        {!isMobile ? (
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <button
+              onClick={openSidebar}
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.14)",
+                color: "rgba(255,255,255,0.75)",
+                padding: "6px 14px",
+                borderRadius: 40,
+                fontSize: 13,
+                fontWeight: 500,
+                cursor: "pointer",
+                letterSpacing: "-0.01em",
+                transition: "background 0.15s, color 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.14)";
+                e.currentTarget.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                e.currentTarget.style.color = "rgba(255,255,255,0.75)";
+              }}
+            >
+              AI Pod
+            </button>
+            <a
+              href="#"
+              style={{
+                fontSize: 14,
+                fontWeight: 450,
+                color: "rgba(255,255,255,0.55)",
+                textDecoration: "none",
+              }}
+            >
+              Sign in
+            </a>
+            <a
+              href="#"
+              style={{
+                background: "#fff",
+                color: "#0a0a0a",
+                padding: "8px 18px",
+                borderRadius: 40,
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: "none",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Book a demo
+            </a>
+          </div>
+        ) : (
+          /* Mobile: CTA + hamburger */
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <a
+              href="#"
+              style={{
+                background: "#fff",
+                color: "#0a0a0a",
+                padding: "7px 16px",
+                borderRadius: 40,
+                fontSize: 13,
+                fontWeight: 600,
+                textDecoration: "none",
+                letterSpacing: "-0.01em",
+                minHeight: 44,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Book a demo
+            </a>
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={menuOpen}
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.14)",
+                color: "#fff",
+                width: 44,
+                height: 44,
+                borderRadius: 8,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: 5,
+                padding: 0,
+              }}
+            >
+              <span
+                style={{
+                  display: "block",
+                  width: 18,
+                  height: 1.5,
+                  background: "#fff",
+                  transition: "transform 0.2s, opacity 0.2s",
+                  transform: menuOpen
+                    ? "translateY(6.5px) rotate(45deg)"
+                    : "none",
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: 18,
+                  height: 1.5,
+                  background: "#fff",
+                  opacity: menuOpen ? 0 : 1,
+                  transition: "opacity 0.2s",
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: 18,
+                  height: 1.5,
+                  background: "#fff",
+                  transition: "transform 0.2s, opacity 0.2s",
+                  transform: menuOpen
+                    ? "translateY(-6.5px) rotate(-45deg)"
+                    : "none",
+                }}
+              />
+            </button>
+          </div>
+        )}
+      </nav>
+
+      {/* Mobile drawer overlay */}
+      {isMobile && menuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 94,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 190,
+            background: "rgba(8,8,8,0.97)",
+            backdropFilter: "blur(20px)",
+            padding: "32px 24px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {links.map((l) => (
+            <a
+              key={l}
+              href="#"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontSize: 22,
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.75)",
+                textDecoration: "none",
+                padding: "16px 0",
+                borderBottom: "1px solid rgba(255,255,255,0.07)",
+                transition: "color 0.15s",
+              }}
+            >
+              {l}
+            </a>
+          ))}
+          <div
             style={{
-              fontSize: 14,
-              fontWeight: 450,
-              color: "rgba(255,255,255,0.55)",
-              textDecoration: "none",
-              padding: "6px 14px",
-              borderRadius: 6,
-              transition: "color 0.15s",
+              marginTop: 32,
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.color = "rgba(255,255,255,0.55)")
-            }
           >
-            {l}
-          </a>
-        ))}
-      </div>
-
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-        <button
-          onClick={openSidebar}
-          style={{
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.14)",
-            color: "rgba(255,255,255,0.75)",
-            padding: "6px 14px",
-            borderRadius: 40,
-            fontSize: 13,
-            fontWeight: 500,
-            cursor: "pointer",
-            letterSpacing: "-0.01em",
-            transition: "background 0.15s, color 0.15s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.14)";
-            e.currentTarget.style.color = "#fff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-            e.currentTarget.style.color = "rgba(255,255,255,0.75)";
-          }}
-        >
-          AI Pod
-        </button>
-        <a
-          href="#"
-          style={{
-            fontSize: 14,
-            fontWeight: 450,
-            color: "rgba(255,255,255,0.55)",
-            textDecoration: "none",
-          }}
-        >
-          Sign in
-        </a>
-        <a
-          href="#"
-          style={{
-            background: "#fff",
-            color: "#0a0a0a",
-            padding: "8px 18px",
-            borderRadius: 40,
-            fontSize: 14,
-            fontWeight: 600,
-            textDecoration: "none",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          Book a demo
-        </a>
-      </div>
-    </nav>
+            <a
+              href="#"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontSize: 15,
+                color: "rgba(255,255,255,0.45)",
+                textDecoration: "none",
+                padding: "8px 0",
+              }}
+            >
+              Sign in
+            </a>
+            <a
+              href="#"
+              onClick={() => setMenuOpen(false)}
+              style={{
+                background: "var(--green)",
+                color: "#fff",
+                padding: "16px 24px",
+                borderRadius: 40,
+                fontSize: 15,
+                fontWeight: 600,
+                textDecoration: "none",
+                textAlign: "center",
+                minHeight: 44,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              Book a demo
+            </a>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -371,6 +548,231 @@ function useHeroAnimations() {
   return { heroRef, headlineRef, mockupRef, glowRef, subtextRef, h1Ref };
 }
 
+/* ─── Origin Quote ─── */
+function OriginQuote() {
+  return (
+    <section
+      style={{
+        background: "var(--black)",
+        padding: "96px 40px",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+        <svg
+          width="32"
+          height="24"
+          viewBox="0 0 32 24"
+          fill="none"
+          style={{ marginBottom: 28, opacity: 0.2 }}
+        >
+          <path
+            d="M0 24V14.4C0 10.56 0.96 7.28 2.88 4.56C4.88 1.84 7.68 0.16 11.28 0L12 3.12C9.68 3.6 7.84 4.72 6.48 6.48C5.12 8.16 4.48 10.16 4.56 12.48H8.64V24H0ZM19.2 24V14.4C19.2 10.56 20.16 7.28 22.08 4.56C24.08 1.84 26.88 0.16 30.48 0L31.2 3.12C28.88 3.6 27.04 4.72 25.68 6.48C24.32 8.16 23.68 10.16 23.76 12.48H27.84V24H19.2Z"
+            fill="white"
+          />
+        </svg>
+        <blockquote
+          className="reveal"
+          style={{
+            fontSize: "clamp(20px, 2.8vw, 34px)",
+            fontWeight: 500,
+            color: "#fff",
+            letterSpacing: "-0.03em",
+            lineHeight: 1.35,
+            marginBottom: 32,
+            fontStyle: "italic",
+          }}
+        >
+          &ldquo;Consulting firms gave them strategy decks. Agencies gave them
+          discovery phases. Nobody just built the thing.&rdquo;
+        </blockquote>
+        <cite
+          className="reveal"
+          style={{
+            fontSize: 13,
+            color: "rgba(255,255,255,0.3)",
+            fontStyle: "normal",
+            letterSpacing: "0.01em",
+          }}
+        >
+          — Michael Batko, Co-founder &amp; CEO, Hourglass AI
+        </cite>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Founders ─── */
+function FoundersSection() {
+  const founders = [
+    {
+      initials: "MB",
+      name: "Michael Batko",
+      role: "Co-founder & CEO",
+      bio: "Ran Startmate for 8 years — Australia's most active startup accelerator. Coached 300+ founders across a $4.5B portfolio. Left to build the thing nobody else was building.",
+      credentials: [
+        "CEO, Startmate · 8 years",
+        "300+ startups coached",
+        "$4.5B portfolio managed",
+        "2× founder, both acquired",
+      ],
+    },
+    {
+      initials: "FE",
+      name: "Finlay Ekins",
+      role: "Co-founder",
+      bio: "Builder first. Believes AI is new enough that anyone willing to invest the effort can become an expert — regardless of background or age. Ships real systems in real businesses.",
+      credentials: [
+        "AI systems builder",
+        "No discovery phases — ships in weeks",
+        "22 years old",
+      ],
+    },
+  ];
+
+  return (
+    <section
+      style={{
+        background: "var(--black)",
+        padding: "100px 40px",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div className="reveal" style={{ marginBottom: 64 }}>
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              color: "var(--green-bright)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: 14,
+            }}
+          >
+            The team
+          </p>
+          <h2
+            style={{
+              fontSize: "clamp(32px, 4vw, 56px)",
+              fontWeight: 700,
+              color: "#fff",
+              letterSpacing: "-0.04em",
+              lineHeight: 1.05,
+              maxWidth: 520,
+            }}
+          >
+            Built by people who&rsquo;ve done it.
+          </h2>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 20,
+          }}
+        >
+          {founders.map((founder) => (
+            <div
+              key={founder.name}
+              className="reveal"
+              style={{
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 16,
+                padding: "40px",
+              }}
+            >
+              <div
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: "50%",
+                  background: "rgba(22,128,60,0.2)",
+                  border: "1px solid rgba(22,128,60,0.3)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 24,
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: "var(--green)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {founder.initials}
+                </span>
+              </div>
+
+              <h3
+                style={{
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color: "#fff",
+                  letterSpacing: "-0.03em",
+                  marginBottom: 4,
+                }}
+              >
+                {founder.name}
+              </h3>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: "var(--green)",
+                  fontWeight: 600,
+                  marginBottom: 18,
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {founder.role}
+              </p>
+              <p
+                style={{
+                  fontSize: 15,
+                  color: "rgba(255,255,255,0.42)",
+                  lineHeight: 1.7,
+                  marginBottom: 28,
+                }}
+              >
+                {founder.bio}
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+                {founder.credentials.map((c) => (
+                  <div
+                    key={c}
+                    style={{ display: "flex", alignItems: "center", gap: 10 }}
+                  >
+                    <span
+                      style={{
+                        width: 4,
+                        height: 4,
+                        borderRadius: "50%",
+                        background: "var(--green)",
+                        flexShrink: 0,
+                        opacity: 0.7,
+                      }}
+                    />
+                    <span
+                      style={{ fontSize: 13, color: "rgba(255,255,255,0.32)" }}
+                    >
+                      {c}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── How It Works (Adaline-style) ─── */
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
@@ -378,64 +780,64 @@ function HowItWorks() {
   const steps = [
     {
       num: "01",
-      label: "Connect",
-      heading: "Connect in minutes, not months.",
+      label: "Audit",
+      heading: "We find where your time disappears.",
       description:
-        "Link your existing tools — Gmail, Xero, Calendly — with a few clicks. No IT team required.",
+        "$2,000 – $10,000 · 7 – 14 days. You get a prioritised roadmap showing exactly what to automate first – and what it's worth.",
       points: [
         {
-          title: "Works with what you have",
-          body: "Gmail, Outlook, Xero, MYOB, ServiceM8, and 40+ other tools Australian businesses already use.",
+          title: "Time audit",
+          body: "We map every recurring task your team touches — emails, invoices, scheduling, data entry — and measure where the hours actually go.",
         },
         {
-          title: "One-time setup",
-          body: "Connect once. Your agents stay connected and keep working even when you're offline.",
+          title: "Cost analysis",
+          body: "We calculate the dollar value of the time being lost. Most businesses are surprised. The average is 12 hours per owner per week.",
         },
         {
-          title: "No training required",
-          body: "Agents learn your tone, clients, and workflows from your existing data automatically.",
+          title: "Prioritised roadmap",
+          body: "You leave with a ranked list of automations, the expected ROI for each, and a clear sequence for what to build first.",
         },
       ],
     },
     {
       num: "02",
-      label: "Automate",
-      heading: "Agents take over the admin.",
+      label: "Build",
+      heading: "We build and deploy your agents.",
       description:
-        "Six purpose-built agents run in parallel — handling emails, invoices, scheduling, quoting, follow-ups, and documents.",
+        "$5,000 – $15,000 per agent · Quick wins in 30 days. We deploy AI agents into the tools you already use. No migration. No learning curve. Just less busywork, starting week one.",
       points: [
         {
-          title: "Always on",
-          body: "Your agents work 24/7 — replying to emails at 2am and sending invoices the moment a job is done.",
+          title: "No migration",
+          body: "Your agents plug directly into the tools you already use — Gmail, Xero, ServiceM8, Calendly — so there's nothing new to learn.",
         },
         {
-          title: "Built for Australian SMBs",
-          body: "Trained on local workflows. Understands GST, EOFY, and how Australian trades and services actually operate.",
+          title: "Quick wins in 30 days",
+          body: "We prioritise the highest-ROI automations first. Most clients see time savings within the first week of deployment.",
         },
         {
-          title: "Shares context",
-          body: "Agents communicate with each other. When Rex sends an invoice, Chase automatically schedules a follow-up.",
+          title: "Built around your workflow",
+          body: "Every agent is configured to match how you actually work — your tone, your approval rules, your business logic.",
         },
       ],
     },
     {
       num: "03",
-      label: "Review",
-      heading: "You stay in control.",
+      label: "Maintain",
+      heading: "Systems that improve every month.",
       description:
-        "Check in once a day. Approve what needs approving. Everything else is already handled.",
+        "We monitor, refine, and expand — so the gains compound instead of decay. It's easy to lose sight of what you built once everything starts piling up. We make sure that never happens.",
       points: [
         {
-          title: "Daily digest",
-          body: "One email each morning with what your agents did overnight and anything that needs your eye.",
+          title: "Monthly reviews",
+          body: "We check in every month to review what's working, catch anything that's drifted, and align on what's next. You always know the state of your system.",
         },
         {
-          title: "Approve before it sends",
-          body: "Set your approval threshold. High-value quotes and first-time client emails wait for your sign-off.",
+          title: "Continuous refinement",
+          body: "As your business evolves, your agents evolve too. We update logic, add workflows, and retire what's no longer relevant — keeping everything tight.",
         },
         {
-          title: "Full audit trail",
-          body: "Every action is logged. See exactly what your agents did, when, and why.",
+          title: "Compounding value",
+          body: "Every improvement builds on the last. Most clients get more value in month six than month one. The system doesn't decay — it compounds.",
         },
       ],
     },
@@ -570,6 +972,35 @@ function HowItWorks() {
       >
         {/* Left — text */}
         <div style={{ minWidth: 0 }}>
+          {activeStep === 2 && (
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                marginBottom: 20,
+                flexWrap: "wrap",
+              }}
+            >
+              {["Monthly retainer", "Always improving"].map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "var(--green)",
+                    background: "rgba(22,128,60,0.10)",
+                    border: "1px solid rgba(22,128,60,0.22)",
+                    borderRadius: 40,
+                    padding: "4px 12px",
+                    letterSpacing: "0.03em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
           <h2
             style={{
               fontSize: "clamp(28px, 3.5vw, 44px)",
@@ -647,23 +1078,71 @@ function HowItWorks() {
             position: "sticky",
             top: 120,
             minWidth: 0,
-            overflow: "hidden",
           }}
         >
           {activeStep === 0 && (
-            <LogoTimeline items={CONNECT_LOGOS} height="h-[360px]" />
-          )}
-          {activeStep === 1 && (
             <div
               style={{
                 width: "100%",
-                height: 360,
+                height: 460,
                 borderRadius: 16,
                 overflow: "hidden",
                 border: "1px solid var(--border)",
               }}
             >
               <Plan />
+            </div>
+          )}
+          {activeStep === 1 && (
+            <div
+              style={{
+                width: "100%",
+                borderRadius: 16,
+                border: "1px solid var(--border)",
+                background: "var(--surface-2)",
+                overflow: "hidden",
+                padding: "32px 28px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "var(--text-dimmer)",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  marginBottom: 24,
+                }}
+              >
+                Files your agents handle
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 20,
+                  justifyContent: "flex-start",
+                }}
+              >
+                {(
+                  [
+                    "pdf",
+                    "csv",
+                    "xls",
+                    "doc",
+                    "json",
+                    "ppt",
+                    "img",
+                    "video",
+                    "code",
+                    "zip",
+                    "md",
+                    "txt",
+                  ] as const
+                ).map((fmt) => (
+                  <FileCard key={fmt} formatFile={fmt} />
+                ))}
+              </div>
             </div>
           )}
           {activeStep === 2 && <MagnifiedBento />}
@@ -1512,50 +1991,6 @@ export default function Home() {
   const { heroRef, headlineRef, mockupRef, glowRef, subtextRef, h1Ref } =
     useHeroAnimations();
 
-  const FEATURES: {
-    icon: ReactNode;
-    title: string;
-    sub: string;
-    body: string;
-  }[] = [
-    {
-      icon: <IconMail size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Email management",
-      sub: "Reads, drafts and sends.",
-      body: "Aria reads every email the moment it arrives, drafts replies in your voice, handles routine enquiries automatically, and surfaces only what genuinely needs you. Most owners never touch the inbox again.",
-    },
-    {
-      icon: <IconInvoice size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Invoicing & payments",
-      sub: "Creates, sends, and chases.",
-      body: "Rex turns completed jobs into invoices, sends them immediately, and runs a timed follow-up sequence for anything unpaid — day 3, 7, 14. Reconciles against Xero and MYOB automatically.",
-    },
-    {
-      icon: <IconCalendar size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Scheduling & calendar",
-      sub: "Books, confirms, reschedules.",
-      body: "Cal manages your entire calendar. Books meetings and site visits, factors in travel time, catches conflicts before they happen, and sends confirmation sequences without you touching a thing.",
-    },
-    {
-      icon: <IconQuote size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Quoting",
-      sub: "Scope in. Proposal out.",
-      body: "Quinn takes incoming quote requests and builds professional proposals in under 10 minutes — drawing on your pricing templates and past jobs. Slow quotes lose jobs. Quinn is never slow.",
-    },
-    {
-      icon: <IconBell size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Follow-ups",
-      sub: "The touchpoint you always forget.",
-      body: "Chase watches your pipeline and fires personalised follow-ups at exactly the right moment — post-quote, post-meeting, post-delivery. Stops automatically when someone replies.",
-    },
-    {
-      icon: <IconBuilding size={22} color="var(--green)" strokeWidth={1.5} />,
-      title: "Built for every industry",
-      sub: "Flexible solutions for every business model.",
-      body: "Industry-focused efficiency without limits.",
-    },
-  ];
-
   const STATS = [
     { value: "12 hrs", label: "saved per week, per owner" },
     { value: "98%", label: "of tasks completed without human input" },
@@ -1799,6 +2234,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ─── ORIGIN QUOTE ─── */}
+      <OriginQuote />
 
       {/* ─── HOW IT WORKS ─── */}
       <HowItWorks />
@@ -2086,85 +2524,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── FEATURES ─── */}
-      <section
-        style={{
-          background: "var(--surface-2)",
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
-        }}
-      >
-        <div
-          style={{ maxWidth: 1100, margin: "0 auto", padding: "100px 40px" }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 0,
-              borderTop: "1px solid rgba(0,0,0,0.09)",
-            }}
-          >
-            {FEATURES.map((f, i) => (
-              <div
-                key={f.title}
-                className="reveal"
-                style={{
-                  padding: "48px 0",
-                  paddingRight: i % 2 === 0 ? 60 : 0,
-                  paddingLeft: i % 2 === 1 ? 60 : 0,
-                  borderBottom:
-                    i < FEATURES.length - 2
-                      ? "1px solid rgba(0,0,0,0.09)"
-                      : "none",
-                  borderRight:
-                    i % 2 === 0 ? "1px solid rgba(0,0,0,0.09)" : "none",
-                }}
-              >
-                <div
-                  style={{
-                    marginBottom: 16,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  {f.icon}
-                </div>
-                <h3
-                  style={{
-                    fontSize: 22,
-                    fontWeight: 700,
-                    color: "var(--text)",
-                    letterSpacing: "-0.025em",
-                    marginBottom: 4,
-                  }}
-                >
-                  {f.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: "var(--green)",
-                    marginBottom: 14,
-                    letterSpacing: "0.01em",
-                  }}
-                >
-                  {f.sub}
-                </p>
-                <p
-                  style={{
-                    fontSize: 15,
-                    color: "var(--text-dim)",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  {f.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ─── INDUSTRY WORKFLOW ─── */}
+      <IndustryWorkflow />
 
       {/* ─── TRUSTED BY ─── */}
       <BentoTestimonials />
@@ -2228,9 +2589,12 @@ export default function Home() {
               code.
             </p>
           </div>
-          <SystemsDiagram />
+          <SystemsOrchestration />
         </div>
       </section>
+
+      {/* ─── FOUNDERS ─── */}
+      <FoundersSection />
 
       {/* ─── PROGRAM ─── */}
       <section

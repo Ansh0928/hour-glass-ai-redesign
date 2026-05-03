@@ -12,6 +12,27 @@ colors:
   light-hover: "#ddeabd"
   border: "#e9ede9"
   hero-bg: "#1a2a0e"
+  # Systems / dark-tech section palette (used only in SystemsOrchestration)
+  systems-bg: "#08111d"
+  systems-cyan: "#22d3ee"
+  systems-indigo: "#818cf8"
+  systems-green: "#34d399"
+  # Third-party integration brand colors (brand-mandated, not Hourglass tokens)
+  brand-xero: "#1ab4d7"
+  brand-gmail: "#ea4335"
+  brand-calendly: "#006bff"
+  brand-servicem8: "#4caf50"
+  brand-myob: "#9b59b6"
+  brand-google: "#4285f4"
+  brand-servicem8-green: "#34c759"
+  brand-purple: "#a855f7"
+  systems-bg-deep: "#080c12"
+  brand-xero-light: "#13b5ea"
+  # Utility / near-black shades used in dark sections
+  black: "#07111d"
+  black-alt: "#0a0a0a"
+  green-dark: "#16803c"
+  green-darker: "#17733a"
 typography:
   h1:
     fontFamily: Playfair Display
