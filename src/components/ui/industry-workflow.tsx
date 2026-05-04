@@ -498,8 +498,8 @@ export function IndustryWorkflow() {
                         paddingLeft: isMobile ? 0 : i === 0 ? 0 : 16,
                       }}
                     >
-                      {/* Connector line between steps — desktop only */}
-                      {!isLast && !isMobile && (
+                      {/* Connector line between steps */}
+                      {!isLast && (
                         <div
                           aria-hidden="true"
                           style={{

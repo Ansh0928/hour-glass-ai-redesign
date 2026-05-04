@@ -408,32 +408,54 @@ body {
   }
 }
 
+/* SO scale-down on mobile — desktop layout preserved, no scroll */
 @media (max-width: 767px) {
+  .so-mobile-clip {
+    overflow: hidden;
+    height: 370px;
+  }
+  .so-mobile-scale {
+    transform: scale(0.38);
+    transform-origin: top left;
+    width: calc(100% / 0.38);
+  }
+  /* Restore desktop grid layout inside the scaled wrapper */
   .so-diagram-padding {
-    padding: 32px 20px 0;
+    padding: 52px 44px 0;
     overflow-x: unset;
   }
   .so-diagram-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 260px 1fr 270px !important;
     min-width: unset !important;
   }
-  /* Hide left integrations + right features — inline display:flex needs !important */
   .so-diagram-grid > div:first-child,
   .so-diagram-grid > div:last-child {
-    display: none !important;
+    display: flex !important;
+    flex-direction: column;
   }
-  /* Hide animated SVG connection lines */
   .so-diagram-padding > svg {
-    display: none !important;
+    display: block !important;
   }
   .so-orch-section {
-    padding: 0 20px;
+    padding: 0 44px;
   }
   .so-agents-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
   .so-trust-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Program section — ensure content doesn't overflow background image on mobile */
+@media (max-width: 767px) {
+  #program {
+    min-height: 620px;
+  }
+  #program img {
+    min-height: 620px;
+    object-fit: cover;
+    object-position: center;
   }
 }
 
@@ -548,9 +570,9 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Agents grid → 2 columns */
+  /* Agents grid → 3 columns */
   .agents-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
   .agents-grid > * {

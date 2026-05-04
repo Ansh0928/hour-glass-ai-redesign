@@ -2011,7 +2011,11 @@ export default function Home() {
               code.
             </p>
           </div>
-          <SystemsOrchestration />
+          <div className="so-mobile-clip">
+            <div className="so-mobile-scale">
+              <SystemsOrchestration />
+            </div>
+          </div>
         </div>
       </section>
 

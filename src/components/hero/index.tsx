@@ -45,7 +45,7 @@ export function Hero() {
         @media (max-width: 767px) {
           .hero-section { padding: 0 20px; }
           .hero-grid { grid-template-columns: 1fr !important; padding-top: 100px !important; }
-          .hero-mockup { display: none; }
+          .hero-mockup { transform: none !important; width: 100%; }
         }
       `}</style>
 
