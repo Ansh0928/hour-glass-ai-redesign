@@ -478,7 +478,7 @@ export function IndustryWorkflow() {
                 style={{
                   display: "grid",
                   gridTemplateColumns: isMobile
-                    ? "repeat(2, 1fr)"
+                    ? "1fr"
                     : `repeat(${industry.steps.length}, 1fr)`,
                   gap: isMobile ? 8 : 0,
                   position: "relative",
