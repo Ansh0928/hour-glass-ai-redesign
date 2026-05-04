@@ -278,7 +278,7 @@ export function IndustryWorkflow() {
       style={{
         background: "var(--black)",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
-        padding: "96px 40px",
+        padding: isMobile ? "64px 20px" : "96px 40px",
       }}
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -465,10 +465,7 @@ export function IndustryWorkflow() {
           {/* Steps */}
           <div
             style={{
-              padding: "32px 24px",
-              overflowX: isMobile ? "auto" : "visible",
-              WebkitOverflowScrolling:
-                "touch" as React.CSSProperties["WebkitOverflowScrolling"],
+              padding: isMobile ? "24px 0" : "32px 24px",
             }}
           >
             <AnimatePresence mode="wait">
@@ -481,9 +478,9 @@ export function IndustryWorkflow() {
                 style={{
                   display: "grid",
                   gridTemplateColumns: isMobile
-                    ? `repeat(${industry.steps.length}, minmax(160px, 1fr))`
+                    ? "repeat(2, 1fr)"
                     : `repeat(${industry.steps.length}, 1fr)`,
-                  gap: 0,
+                  gap: isMobile ? 8 : 0,
                   position: "relative",
                 }}
               >
@@ -502,8 +499,8 @@ export function IndustryWorkflow() {
                         paddingLeft: i === 0 ? 0 : 16,
                       }}
                     >
-                      {/* Connector line between steps */}
-                      {!isLast && (
+                      {/* Connector line between steps — desktop only */}
+                      {!isLast && !isMobile && (
                         <div
                           aria-hidden="true"
                           style={{

@@ -164,7 +164,7 @@ body {
 /* ─── Page shell hero ─── */
 .page-shell-hero {
   background: var(--hero-bg);
-  padding: 160px 40px 80px;
+  padding: 120px 40px 80px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -455,7 +455,7 @@ body {
 
 @media (max-width: 767px) {
   .page-shell-hero {
-    padding: 120px 20px 60px;
+    padding: 96px 20px 60px;
   }
 
   .results-stats-grid {
