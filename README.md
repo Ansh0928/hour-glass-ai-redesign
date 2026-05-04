@@ -377,14 +377,7 @@ npm run build
 - [ ] Webhook integrations (Zapier, Make, n8n)
 - [ ] Enterprise multi-seat support
 
----
-
-## Contributing
-
-This is the public marketing site for Hourglass AI. The core agent platform is closed source.
-
-For design feedback, feature requests, or partnership enquiries: [hello@thehourglass.ai](mailto:hello@thehourglass.ai)
 
 ---
 
-_Built in Melbourne. For Australian businesses. By people who believe the admin should never be the reason a great business stops growing._
+_Built in Australia. For Australian businesses. By people who believe the admin should never be the reason a great business stops growing._
