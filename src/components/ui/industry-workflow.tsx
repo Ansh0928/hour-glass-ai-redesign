@@ -475,12 +475,11 @@ export function IndustryWorkflow() {
                 initial="hidden"
                 animate="show"
                 exit="exit"
+                className="iw-steps-grid"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: isMobile
-                    ? "1fr"
-                    : `repeat(${industry.steps.length}, 1fr)`,
-                  gap: isMobile ? 8 : 0,
+                  gridTemplateColumns: `repeat(${industry.steps.length}, 1fr)`,
+                  gap: 0,
                   position: "relative",
                 }}
               >

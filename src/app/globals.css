@@ -397,6 +397,17 @@ body {
   margin-top: 28px;
 }
 
+/* ─── IndustryWorkflow responsive ─── */
+.iw-steps-grid {
+  /* desktop: inline style controls column count */
+}
+@media (max-width: 767px) {
+  .iw-steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+}
+
 @media (max-width: 767px) {
   .so-diagram-padding {
     padding: 32px 20px 0;
