@@ -465,7 +465,7 @@ export function IndustryWorkflow() {
           {/* Steps */}
           <div
             style={{
-              padding: isMobile ? "24px 0" : "32px 24px",
+              padding: isMobile ? "24px 16px" : "32px 24px",
             }}
           >
             <AnimatePresence mode="wait">
@@ -495,8 +495,8 @@ export function IndustryWorkflow() {
                       variants={stepVariant}
                       style={{
                         position: "relative",
-                        paddingRight: isLast ? 0 : 16,
-                        paddingLeft: i === 0 ? 0 : 16,
+                        paddingRight: isMobile ? 0 : isLast ? 0 : 16,
+                        paddingLeft: isMobile ? 0 : i === 0 ? 0 : 16,
                       }}
                     >
                       {/* Connector line between steps — desktop only */}

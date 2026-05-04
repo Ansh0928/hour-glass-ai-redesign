@@ -538,8 +538,9 @@ export function ProcessSteps() {
         }
         @media (max-width: 768px) {
           .hg-content-wrap { grid-template-columns: 1fr; padding: 0 20px; }
-          .hg-right { display: none; }
-          .hg-left { padding: 36px 0 36px; border-right: none; }
+          .hg-right { display: block; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); padding: 0; min-height: 280px; }
+          .hg-right-inner { padding: 24px 0; }
+          .hg-left { padding: 36px 0 28px; border-right: none; }
           .hg-tab-bar-inner { padding: 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
           .hg-tab-bar-inner::-webkit-scrollbar { display: none; }
           .hg-tab-btn { white-space: nowrap; padding-right: 24px; }
