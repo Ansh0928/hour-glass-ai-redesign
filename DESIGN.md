@@ -28,6 +28,9 @@ colors:
   brand-purple: "#a855f7"
   systems-bg-deep: "#080c12"
   brand-xero-light: "#13b5ea"
+  systems-bg-ink: "#050a0f"
+  systems-accent-green: "#4ade80"
+  systems-accent-indigo: "#a5b4fc"
   # Utility / near-black shades used in dark sections
   black: "#07111d"
   black-alt: "#0a0a0a"
