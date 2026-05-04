@@ -146,9 +146,10 @@ export function Testimonials() {
 
         {/* Bento grid */}
         <div
+          className="testimonial-bento-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(3, 1fr)",
             gap: 12,
           }}
         >

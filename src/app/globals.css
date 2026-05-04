@@ -641,14 +641,35 @@ body {
     padding: 64px 20px;
   }
 
-  /* Founders grid → single column */
+  /* Founders grid → keep 2 columns, compact */
   .founders-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
-  /* Founder card → reduce padding */
+  /* Founder card → compact padding */
   .founder-card {
-    padding: 24px !important;
+    padding: 16px !important;
+  }
+
+  /* Client results bento → compact cards */
+  .testimonial-bento-grid {
+    gap: 8px !important;
+  }
+  .testimonial-bento-grid > div {
+    gap: 8px !important;
+  }
+  .testimonial-bento-grid > div > div {
+    padding: 14px !important;
+    border-radius: 12px !important;
+  }
+  .testimonial-bento-grid p {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 10px !important;
+  }
+  .testimonial-bento-grid .flex {
+    gap: 6px !important;
   }
 
   /* Homepage stats section → reduce padding */
