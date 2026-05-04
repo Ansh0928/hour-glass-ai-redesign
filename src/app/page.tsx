@@ -530,9 +530,9 @@ function useHeroAnimations() {
 function OriginQuote() {
   return (
     <section
+      className="section-padding"
       style={{
         background: "var(--black)",
-        padding: "96px 40px",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
       }}
     >
@@ -1685,9 +1685,9 @@ export default function Home() {
 
       {/* ─── AGENTS BENTO ─── */}
       <section
+        className="section-padding"
         style={{
           background: "var(--surface)",
-          padding: "100px 40px",
           borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
