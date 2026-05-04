@@ -254,7 +254,7 @@ const stepsVariants = {
 };
 
 const stepVariant = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 1, y: 8 },
   show: {
     opacity: 1,
     y: 0,

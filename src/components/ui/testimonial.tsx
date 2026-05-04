@@ -72,9 +72,9 @@ const revealVariants = {
     transition: { delay: i * 0.12, duration: 0.55, ease: "easeOut" },
   }),
   hidden: {
-    filter: "blur(6px)",
+    filter: "blur(0px)",
     y: 16,
-    opacity: 0,
+    opacity: 1,
   },
 };
 

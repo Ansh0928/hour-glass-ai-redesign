@@ -21,7 +21,7 @@ type TimelineContentProps = {
 } & Omit<HTMLMotionProps<"div">, "variants" | "animate" | "initial" | "custom">;
 
 const DEFAULT_VARIANTS: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 1, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -43,7 +43,7 @@ export function TimelineContent({
 
   const isInView = useInView(ref as RefObject<Element>, {
     once: true,
-    margin: "-60px",
+    margin: "10px",
   });
 
   const variants = (customVariants ?? DEFAULT_VARIANTS) as Variants;
