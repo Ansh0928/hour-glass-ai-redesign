@@ -7,45 +7,63 @@ import {
   Database,
   LayoutGrid,
   Mail,
-  FileText,
-  Calendar,
-  Bell,
+  ReceiptText,
+  CalendarDays,
+  BellRing,
   ShieldCheck,
-  Layers,
+  Layers3,
   Sparkles,
 } from "lucide-react";
 
-/* ─── Integration data ─── */
+/* ─────────────────────────────────────────────
+   Token sheet — one accent, everything else
+   derives from opacity on pure white / black
+───────────────────────────────────────────── */
+const C = {
+  bg: "#050a0f", // near-black with faint blue undertone
+  card: "rgba(255,255,255,0.035)",
+  cardHover: "rgba(255,255,255,0.06)",
+  border: "rgba(255,255,255,0.07)",
+  borderHover: "rgba(255,255,255,0.14)",
+  line: "rgba(255,255,255,0.05)",
+  dot: "#4ade80", // single accent — electric green
+  dotAlt: "#a5b4fc", // only used on App Marketplace feature + Scheduling
+  text: "#ffffff",
+  dim: "rgba(255,255,255,0.38)",
+  faint: "rgba(255,255,255,0.2)",
+} as const;
+
+/* ─── Data ─── */
 const INTEGRATIONS = [
   {
     name: "Xero",
     category: "Accounting",
     logo: "/images/integrations/xero.svg",
-    color: "#13b5ea",
+    accent: "#13b5ea",
   },
   {
     name: "Gmail",
     category: "Email",
     logo: "/images/integrations/gmail.svg",
-    color: "#ea4335",
+    accent: "#ea4335",
   },
   {
     name: "Calendly",
     category: "Scheduling",
     logo: "/images/integrations/calendly.svg",
-    color: "#006bff",
+    accent: "#006bff",
   },
   {
-    name: "ServiceM8",
-    category: "Field Service",
+    name: "Google Drive",
+    category: "Storage",
     logo: "/images/integrations/googledrive.svg",
-    color: "#34c759",
+    accent: "#34c759",
   },
   {
     name: "MYOB",
     category: "Accounting",
     logo: "/images/integrations/myob.svg",
-    color: "#a855f7",
+    accent: "#a855f7",
   },
 ];
 
@@ -54,25 +72,20 @@ const FEATURES = [
     Icon: Link2,
     name: "Connect API",
     sub: "Secure Integrations",
-    color: "#22d3ee",
+    accent: C.dot,
   },
-  {
-    Icon: Zap,
-    name: "Event Triggers",
-    sub: "Real-time Events",
-    color: "#22d3ee",
-  },
+  { Icon: Zap, name: "Event Triggers", sub: "Real-time Events", accent: C.dot },
   {
     Icon: Database,
     name: "Data Pipeline",
     sub: "Clean · Transform · Sync",
-    color: "#22d3ee",
+    accent: C.dot,
   },
   {
     Icon: LayoutGrid,
     name: "App Marketplace",
     sub: "100+ Integrations",
-    color: "#818cf8",
+    accent: C.dotAlt,
   },
 ];
 
@@ -80,71 +93,53 @@ const AGENTS = [
   {
     Icon: Mail,
     name: "Email Agent",
-    sub: "Smart replies.\nInstant responses.",
-    iconColor: "#22d3ee",
-    iconBg: "rgba(34,211,238,0.12)",
+    sub: "Smart replies. Instant responses.",
+    accent: C.dot,
   },
   {
-    Icon: FileText,
+    Icon: ReceiptText,
     name: "Invoice Agent",
-    sub: "Create, send & track\ninvoices automatically.",
-    iconColor: "#22d3ee",
-    iconBg: "rgba(34,211,238,0.12)",
+    sub: "Create, send & track invoices.",
+    accent: C.dot,
   },
   {
-    Icon: Calendar,
+    Icon: CalendarDays,
     name: "Scheduling",
-    sub: "Book meetings.\nAvoid double bookings.",
-    iconColor: "#818cf8",
-    iconBg: "rgba(129,140,248,0.12)",
+    sub: "Book meetings. Avoid double bookings.",
+    accent: C.dotAlt,
   },
   {
-    Icon: Bell,
+    Icon: BellRing,
     name: "Follow-ups",
-    sub: "Nurture leads.\nClose more deals.",
-    iconColor: "#22d3ee",
-    iconBg: "rgba(34,211,238,0.12)",
+    sub: "Nurture leads. Close more deals.",
+    accent: C.dot,
   },
 ];
 
-const TRUST = [
-  {
-    Icon: ShieldCheck,
-    name: "Secure & Compliant",
-    sub: "SOC 2 · GDPR · Encrypted",
-  },
-  {
-    Icon: Zap,
-    name: "Real-time Automation",
-    sub: "Triggers · Actions · Insights",
-  },
-  { Icon: Layers, name: "Scalable Infrastructure", sub: "Built for growth" },
-  { Icon: Sparkles, name: "AI-Powered Intelligence", sub: "Smarter every day" },
-];
-
-/* ─── SVG path geometry (1100 × 520 viewBox) ─── */
-const VW = 1100;
+/* ─── SVG geometry (1140 × 520 viewBox) ─── */
+const VW = 1140;
 const VH = 520;
 
-// Left card connectors: right edge, 5 Y positions
-const LX = 232;
-const LYS = [56, 140, 224, 308, 392];
+// Left card right-edge X, 5 mid-Ys
+const LX = 246;
+const LYS = [54, 138, 222, 306, 390];
 
-// Hub: left=370, right=730, midY=250
-const HL = 370;
-const HR = 730;
-const HY = 250;
+// Hub: left=390, right=750, midY=260
+const HL = 390;
+const HR = 750;
+const HY = 260;
 
-// Right card connectors: left edge, 4 Y positions
-const RX = 868;
-const RYS = [80, 186, 292, 398];
+// Right card left-edge X, 4 mid-Ys
+const RX = 892;
+const RYS = [80, 188, 296, 404];
 
 function curve(x1: number, y1: number, x2: number, y2: number) {
-  const mx = (x1 + x2) / 2;
-  return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+  const cx = (x1 + x2) / 2;
+  return `M${x1},${y1} C${cx},${y1} ${cx},${y2} ${x2},${y2}`;
 }
 
-function AnimatedDot({
+/* Single dot per path — clean, purposeful */
+function FlowDot({
   path,
   color,
   dur,
@@ -156,7 +151,7 @@ function AnimatedDot({
   delay: number;
 }) {
   return (
-    <circle r={3.5} fill={color} opacity={0.9}>
+    <circle r={3} fill={color} opacity={0.95}>
       <animateMotion
         dur={`${dur}s`}
         begin={`${delay}s`}
@@ -170,94 +165,178 @@ function AnimatedDot({
 
 function FlowLine({
   path,
-  dotColor,
+  color,
   dur,
 }: {
   path: string;
-  dotColor: string;
+  color: string;
   dur: number;
 }) {
   return (
     <>
-      <path
-        d={path}
-        stroke="rgba(255,255,255,0.07)"
-        strokeWidth={1.2}
-        fill="none"
-      />
-      <AnimatedDot path={path} color={dotColor} dur={dur} delay={0} />
-      <AnimatedDot path={path} color={dotColor} dur={dur} delay={-dur / 2} />
+      <path d={path} stroke={C.line} strokeWidth={1} fill="none" />
+      <FlowDot path={path} color={color} dur={dur} delay={0} />
+      <FlowDot path={path} color={color} dur={dur} delay={-dur * 0.5} />
     </>
   );
 }
 
-/* ─── Hourglass SVG (large, outline, white) ─── */
-function HourglassIcon({ size = 64 }: { size?: number }) {
+/* Connector knob — shared between left cards (right side) and right cards (left side) */
+function Knob({ color }: { color: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 48 56" fill="none">
-      {/* Top bar */}
-      <rect
-        x="4"
-        y="2"
-        width="40"
-        height="4"
-        rx="2"
-        fill="white"
-        opacity="0.9"
-      />
-      {/* Bottom bar */}
-      <rect
-        x="4"
-        y="50"
-        width="40"
-        height="4"
-        rx="2"
-        fill="white"
-        opacity="0.9"
-      />
-      {/* Left side lines */}
-      <path
-        d="M6 6L22 26"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
-      <path
-        d="M42 6L26 26"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
-      {/* Bottom V */}
-      <path
-        d="M22 26L6 50"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
-      <path
-        d="M26 26L42 50"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
-      {/* Top fill (sand falling) */}
-      <path d="M8 6L24 24L40 6Z" fill="white" opacity="0.85" />
-      {/* Bottom fill (accumulated sand) */}
-      <path d="M16 50L24 40L32 50Z" fill="white" opacity="0.85" />
-    </svg>
+    <div
+      style={{
+        width: 8,
+        height: 8,
+        borderRadius: "50%",
+        background: color,
+        flexShrink: 0,
+      }}
+    />
   );
 }
 
+/* Integration card */
+function IntegCard({ intg }: { intg: (typeof INTEGRATIONS)[number] }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "14px 16px",
+        background: C.card,
+        borderRadius: 12,
+        position: "relative",
+        cursor: "default",
+        transition: "background 0.18s",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.background = C.cardHover;
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.background = C.card;
+      }}
+    >
+      {/* Logo in a neutral pill */}
+      <div
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: 10,
+          background: "rgba(255,255,255,0.07)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+          overflow: "hidden",
+          padding: 7,
+        }}
+      >
+        <Image
+          src={intg.logo}
+          alt={intg.name}
+          width={24}
+          height={24}
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+      <div>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: C.text,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {intg.name}
+        </div>
+        <div style={{ fontSize: 11, color: C.dim, marginTop: 2 }}>
+          {intg.category}
+        </div>
+      </div>
+      {/* Right connector knob */}
+      <div
+        style={{
+          position: "absolute",
+          right: -5,
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 2,
+        }}
+      >
+        <Knob color={intg.accent} />
+      </div>
+    </div>
+  );
+}
+
+/* Feature card */
+function FeatCard({ feat }: { feat: (typeof FEATURES)[number] }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "14px 16px",
+        background: C.card,
+        borderRadius: 12,
+        position: "relative",
+        cursor: "default",
+        transition: "background 0.18s",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.background = C.cardHover;
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.background = C.card;
+      }}
+    >
+      {/* Left connector knob */}
+      <div
+        style={{
+          position: "absolute",
+          left: -5,
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 2,
+        }}
+      >
+        <Knob color={feat.accent} />
+      </div>
+      {/* Icon — just the stroke, no bg box */}
+      <feat.Icon
+        size={18}
+        color={feat.accent}
+        strokeWidth={1.8}
+        style={{ flexShrink: 0 }}
+      />
+      <div>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: C.text,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {feat.name}
+        </div>
+        <div style={{ fontSize: 11, color: C.dim, marginTop: 2 }}>
+          {feat.sub}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main export ─── */
 export function SystemsOrchestration() {
   const leftPaths = LYS.map((y) => curve(LX, y, HL, HY));
   const rightPaths = RYS.map((y) => curve(HR, HY, RX, y));
-  const dotColors = ["#13b5ea", "#ea4335", "#006bff", "#34c759", "#a855f7"];
-  const durs = [2.4, 2.6, 2.2, 2.8, 2.5];
+  const speeds = [2.4, 2.7, 2.1, 3.0, 2.5];
 
   return (
     <div
@@ -265,114 +344,33 @@ export function SystemsOrchestration() {
         width: "100%",
         borderRadius: 20,
         overflow: "hidden",
-        background: "#080c12",
-        border: "1px solid rgba(255,255,255,0.05)",
+        background: C.bg,
       }}
     >
-      {/* ── Main diagram ── */}
-      <div style={{ position: "relative", padding: "52px 40px 0" }}>
+      {/* ══ DIAGRAM AREA ══ */}
+      <div
+        className="so-diagram-padding"
+        style={{
+          position: "relative",
+        }}
+      >
         <div
+          className="so-diagram-grid"
           style={{
-            display: "grid",
-            gridTemplateColumns: "260px 1fr 280px",
-            gap: 0,
+            gridTemplateColumns: "260px 1fr 270px",
             alignItems: "center",
             minHeight: VH,
+            gap: 0,
           }}
         >
-          {/* ── Left: Integration cards ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* ─ LEFT: Integrations ─ */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {INTEGRATIONS.map((intg) => (
-              <div
-                key={intg.name}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 12,
-                  padding: "13px 16px",
-                  position: "relative",
-                  cursor: "default",
-                  transition: "border-color 0.2s, background 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    `${intg.color}50`;
-                  (e.currentTarget as HTMLElement).style.background =
-                    `${intg.color}0f`;
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.07)";
-                  (e.currentTarget as HTMLElement).style.background =
-                    "rgba(255,255,255,0.04)";
-                }}
-              >
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 9,
-                    background: "rgba(255,255,255,0.08)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    overflow: "hidden",
-                    padding: 6,
-                  }}
-                >
-                  <Image
-                    src={intg.logo}
-                    alt={intg.name}
-                    width={24}
-                    height={24}
-                    style={{ objectFit: "contain" }}
-                  />
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "#fff",
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {intg.name}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "rgba(255,255,255,0.35)",
-                      marginTop: 2,
-                    }}
-                  >
-                    {intg.category}
-                  </div>
-                </div>
-                {/* Connector dot */}
-                <div
-                  style={{
-                    position: "absolute",
-                    right: -5,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: 9,
-                    height: 9,
-                    borderRadius: "50%",
-                    background: intg.color,
-                    boxShadow: `0 0 8px ${intg.color}`,
-                    zIndex: 2,
-                  }}
-                />
-              </div>
+              <IntegCard key={intg.name} intg={intg} />
             ))}
           </div>
 
-          {/* ── Center: Hub ── */}
+          {/* ─ CENTER: Hub ─ */}
           <div
             style={{
               display: "flex",
@@ -385,28 +383,24 @@ export function SystemsOrchestration() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 18,
-                width: 360,
-                background:
-                  "radial-gradient(ellipse 80% 70% at 50% 45%, rgba(34,211,238,0.07) 0%, rgba(34,211,238,0.02) 55%, transparent 100%)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 18,
-                padding: "40px 32px",
+                gap: 22,
+                width: 340,
+                padding: "44px 32px",
                 position: "relative",
                 zIndex: 1,
               }}
             >
-              {/* Hub left/right connector dots */}
+              {/* Hub connector dots */}
               <div
                 style={{
                   position: "absolute",
                   left: -5,
                   top: "50%",
                   transform: "translateY(-50%)",
-                  width: 9,
-                  height: 9,
+                  width: 8,
+                  height: 8,
                   borderRadius: "50%",
-                  background: "rgba(255,255,255,0.3)",
+                  background: "rgba(255,255,255,0.25)",
                 }}
               />
               <div
@@ -415,23 +409,75 @@ export function SystemsOrchestration() {
                   right: -5,
                   top: "50%",
                   transform: "translateY(-50%)",
-                  width: 9,
-                  height: 9,
+                  width: 8,
+                  height: 8,
                   borderRadius: "50%",
-                  background: "rgba(255,255,255,0.3)",
+                  background: "rgba(255,255,255,0.25)",
                 }}
               />
 
-              {/* Large hourglass icon */}
-              <HourglassIcon size={64} />
+              {/* Large hourglass — clean outline SVG */}
+              <svg width="80" height="92" viewBox="0 0 80 92" fill="none">
+                <rect
+                  x="4"
+                  y="2"
+                  width="72"
+                  height="6"
+                  rx="3"
+                  fill="white"
+                  opacity="0.85"
+                />
+                <rect
+                  x="4"
+                  y="84"
+                  width="72"
+                  height="6"
+                  rx="3"
+                  fill="white"
+                  opacity="0.85"
+                />
+                <path d="M8 8L36 42L44 42L72 8Z" fill="white" opacity="0.75" />
+                <path d="M28 84L40 68L52 84Z" fill="white" opacity="0.75" />
+                <path
+                  d="M8 8L36 42"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  opacity="0.35"
+                />
+                <path
+                  d="M72 8L44 42"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  opacity="0.35"
+                />
+                <path
+                  d="M36 42L8 84"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  opacity="0.35"
+                />
+                <path
+                  d="M44 42L72 84"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  opacity="0.35"
+                />
+              </svg>
 
+              {/* Brand name — Playfair to match site brand */}
               <div style={{ textAlign: "center" }}>
                 <div
                   style={{
-                    fontSize: 28,
+                    fontFamily:
+                      "var(--font-playfair, 'Playfair Display', Georgia, serif)",
+                    fontSize: 32,
                     fontWeight: 700,
-                    color: "#fff",
-                    letterSpacing: "-0.03em",
+                    color: C.text,
+                    letterSpacing: "-0.025em",
                     lineHeight: 1.1,
                     marginBottom: 10,
                   }}
@@ -440,11 +486,11 @@ export function SystemsOrchestration() {
                 </div>
                 <p
                   style={{
-                    fontSize: 13,
-                    color: "rgba(255,255,255,0.45)",
-                    lineHeight: 1.65,
+                    fontSize: 12,
+                    color: C.dim,
+                    lineHeight: 1.7,
                     margin: 0,
-                    maxWidth: 240,
+                    maxWidth: 220,
                   }}
                 >
                   Automate workflows. Connect everything.
@@ -454,7 +500,7 @@ export function SystemsOrchestration() {
               </div>
 
               {/* Side-by-side CTAs */}
-              <div style={{ display: "flex", gap: 10, width: "100%" }}>
+              <div style={{ display: "flex", gap: 8, width: "100%" }}>
                 <a
                   href="#"
                   style={{
@@ -463,17 +509,17 @@ export function SystemsOrchestration() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 6,
-                    background: "#fff",
-                    color: "#080c12",
+                    background: C.text,
+                    color: C.bg,
                     borderRadius: 40,
                     padding: "11px 0",
-                    fontSize: 14,
-                    fontWeight: 600,
+                    fontSize: 13,
+                    fontWeight: 700,
                     textDecoration: "none",
                     letterSpacing: "-0.01em",
                   }}
                 >
-                  Get Started <span style={{ opacity: 0.5 }}>→</span>
+                  Get Started <span>→</span>
                 </a>
                 <a
                   href="#"
@@ -483,291 +529,168 @@ export function SystemsOrchestration() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 6,
-                    background: "rgba(255,255,255,0.07)",
-                    color: "rgba(255,255,255,0.8)",
+                    background: "rgba(255,255,255,0.06)",
+                    color: "rgba(255,255,255,0.7)",
                     borderRadius: 40,
                     padding: "11px 0",
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: 500,
                     textDecoration: "none",
                     border: "1px solid rgba(255,255,255,0.1)",
                   }}
                 >
-                  See How It Works{" "}
-                  <span style={{ fontSize: 10, opacity: 0.5 }}>▶</span>
+                  See How It Works <span style={{ fontSize: 10 }}>▶</span>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ── Right: Feature cards ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* ─ RIGHT: Features ─ */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {FEATURES.map((feat) => (
-              <div
-                key={feat.name}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 12,
-                  padding: "13px 16px",
-                  position: "relative",
-                  cursor: "default",
-                  transition: "border-color 0.2s, background 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(34,211,238,0.3)";
-                  (e.currentTarget as HTMLElement).style.background =
-                    "rgba(34,211,238,0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.07)";
-                  (e.currentTarget as HTMLElement).style.background =
-                    "rgba(255,255,255,0.04)";
-                }}
-              >
-                {/* Left connector dot */}
-                <div
-                  style={{
-                    position: "absolute",
-                    left: -5,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: 9,
-                    height: 9,
-                    borderRadius: "50%",
-                    background: feat.color,
-                    boxShadow: `0 0 8px ${feat.color}`,
-                    zIndex: 2,
-                  }}
-                />
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 9,
-                    background: "rgba(34,211,238,0.1)",
-                    border: "1px solid rgba(34,211,238,0.18)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
-                  <feat.Icon size={16} color={feat.color} strokeWidth={2} />
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "#fff",
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {feat.name}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "rgba(255,255,255,0.35)",
-                      marginTop: 2,
-                    }}
-                  >
-                    {feat.sub}
-                  </div>
-                </div>
-              </div>
+              <FeatCard key={feat.name} feat={feat} />
             ))}
           </div>
         </div>
 
-        {/* ── Animated SVG paths ── */}
+        {/* ── Animated SVG paths — absolute overlay ── */}
         <svg
           viewBox={`0 0 ${VW} ${VH}`}
           preserveAspectRatio="xMidYMid meet"
           style={{
             position: "absolute",
-            inset: "52px 40px 0",
-            width: "calc(100% - 80px)",
+            inset: "52px 44px 0",
+            width: "calc(100% - 88px)",
             height: VH,
             pointerEvents: "none",
             overflow: "visible",
           }}
         >
+          {/* Left → hub */}
           {leftPaths.map((p, i) => (
             <FlowLine
               key={`l${i}`}
               path={p}
-              dotColor={dotColors[i]}
-              dur={durs[i]}
+              color={INTEGRATIONS[i].accent}
+              dur={speeds[i]}
             />
           ))}
+          {/* Hub → right */}
           {rightPaths.map((p, i) => (
             <FlowLine
               key={`r${i}`}
               path={p}
-              dotColor={i === 3 ? "#818cf8" : "#22d3ee"}
-              dur={durs[(i + 1) % durs.length]}
+              color={i === 3 ? C.dotAlt : C.dot}
+              dur={speeds[(i + 1) % speeds.length]}
             />
           ))}
         </svg>
       </div>
 
-      {/* ── Orchestration header line + cards ── */}
-      <div style={{ padding: "0 40px", marginTop: 36 }}>
-        {/* Top connecting lines + ORCHESTRATION label */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            marginBottom: 0,
-            position: "relative",
-          }}
-        >
-          <svg
-            width="100%"
-            height="48"
-            style={{ display: "block", overflow: "visible" }}
-          >
-            {/* Horizontal top bar */}
+      {/* ══ ORCHESTRATION ══ */}
+      <div style={{ padding: "0 44px", marginTop: 40 }}>
+        {/* Connecting line topology */}
+        <div style={{ position: "relative" }}>
+          <svg width="100%" height="44" style={{ display: "block" }}>
+            {/* Horizontal spine */}
             <line
               x1="12.5%"
-              y1="8"
+              y1="6"
               x2="87.5%"
-              y2="8"
-              stroke="rgba(255,255,255,0.08)"
+              y2="6"
+              stroke={C.line}
               strokeWidth="1"
             />
-            {/* 4 drop lines to cards */}
-            {[12.5, 37.5, 62.5, 87.5].map((x, i) => (
-              <line
-                key={i}
-                x1={`${x}%`}
-                y1="8"
-                x2={`${x}%`}
-                y2="48"
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth="1"
-              />
-            ))}
-            {/* 4 colored dots on the top bar */}
-            {[12.5, 37.5, 62.5, 87.5].map((x, i) => (
-              <circle
-                key={i}
-                cx={`${x}%`}
-                cy="8"
-                r="3.5"
-                fill={i === 2 ? "#818cf8" : "#22d3ee"}
-                opacity={0.8}
-              />
+            {/* 4 drops */}
+            {["12.5%", "37.5%", "62.5%", "87.5%"].map((x, i) => (
+              <g key={i}>
+                <line
+                  x1={x}
+                  y1="6"
+                  x2={x}
+                  y2="44"
+                  stroke={C.line}
+                  strokeWidth="1"
+                />
+                <circle
+                  cx={x}
+                  cy="6"
+                  r="3"
+                  fill={i === 2 ? C.dotAlt : C.dot}
+                  opacity={0.7}
+                />
+              </g>
             ))}
           </svg>
-          {/* ORCHESTRATION label — centered overlay */}
+          {/* ORCHESTRATION pill — centered on the spine */}
           <div
             style={{
               position: "absolute",
-              top: -10,
+              top: -9,
               left: "50%",
               transform: "translateX(-50%)",
-              background: "#080c12",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: C.bg,
+              border: `1px solid rgba(255,255,255,0.09)`,
               borderRadius: 40,
-              padding: "4px 16px",
+              padding: "4px 18px",
               fontSize: 10,
               fontWeight: 700,
-              color: "rgba(255,255,255,0.4)",
-              letterSpacing: "0.12em",
+              color: C.faint,
+              letterSpacing: "0.14em",
               textTransform: "uppercase",
-              zIndex: 2,
+              whiteSpace: "nowrap",
             }}
           >
             Orchestration
           </div>
         </div>
 
-        {/* Agent cards */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 10,
-          }}
-        >
+        {/* 4 agent cards */}
+        <div className="so-agents-grid">
           {AGENTS.map((agent) => (
             <div
               key={agent.name}
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                padding: "26px 22px 22px",
+                background: C.card,
                 borderRadius: 14,
-                padding: "24px 20px 20px",
                 cursor: "default",
-                transition: "border-color 0.2s, background 0.2s",
+                transition: "background 0.18s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor =
-                  `${agent.iconColor}40`;
-                (e.currentTarget as HTMLElement).style.background =
-                  "rgba(255,255,255,0.05)";
+                (e.currentTarget as HTMLElement).style.background = C.cardHover;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor =
-                  "rgba(255,255,255,0.07)";
-                (e.currentTarget as HTMLElement).style.background =
-                  "rgba(255,255,255,0.03)";
+                (e.currentTarget as HTMLElement).style.background = C.card;
               }}
             >
-              {/* Large icon */}
-              <div
-                style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: 14,
-                  background: agent.iconBg,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 16,
-                }}
-              >
-                <agent.Icon
-                  size={24}
-                  color={agent.iconColor}
-                  strokeWidth={1.8}
-                />
-              </div>
+              {/* Icon — bare, no bg box */}
+              <agent.Icon
+                size={28}
+                color={agent.accent}
+                strokeWidth={1.6}
+                style={{ marginBottom: 18, display: "block" }}
+              />
               <div
                 style={{
                   fontSize: 15,
                   fontWeight: 700,
-                  color: "#fff",
+                  color: C.text,
+                  letterSpacing: "-0.015em",
                   marginBottom: 8,
-                  letterSpacing: "-0.01em",
                 }}
               >
                 {agent.name}
               </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.38)",
-                  lineHeight: 1.6,
-                  whiteSpace: "pre-line",
-                }}
-              >
+              <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.65 }}>
                 {agent.sub}
               </div>
               <div
                 style={{
-                  marginTop: 14,
-                  fontSize: 13,
-                  color: "rgba(255,255,255,0.2)",
+                  marginTop: 16,
+                  fontSize: 12,
+                  color: "rgba(255,255,255,0.18)",
+                  letterSpacing: "0.02em",
                 }}
               >
                 →
@@ -777,33 +700,52 @@ export function SystemsOrchestration() {
         </div>
       </div>
 
-      {/* ── Trust bar ── */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          marginTop: 24,
-        }}
-      >
-        {TRUST.map((t, i) => (
+      {/* ══ TRUST BAR ══ */}
+      <div className="so-trust-grid">
+        {[
+          {
+            Icon: ShieldCheck,
+            name: "Secure & Compliant",
+            sub: "SOC 2 · GDPR · Encrypted",
+          },
+          {
+            Icon: Zap,
+            name: "Real-time Automation",
+            sub: "Triggers · Actions · Insights",
+          },
+          {
+            Icon: Layers3,
+            name: "Scalable Infrastructure",
+            sub: "Built for growth",
+          },
+          {
+            Icon: Sparkles,
+            name: "AI-Powered Intelligence",
+            sub: "Smarter every day",
+          },
+        ].map((t, i) => (
           <div
             key={t.name}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 12,
-              padding: "16px 24px",
+              gap: 13,
+              padding: "18px 24px",
               borderRight: i < 3 ? "1px solid rgba(255,255,255,0.05)" : "none",
             }}
           >
-            <t.Icon size={18} color="rgba(255,255,255,0.3)" strokeWidth={1.5} />
+            <t.Icon
+              size={16}
+              color="rgba(255,255,255,0.28)"
+              strokeWidth={1.5}
+              style={{ flexShrink: 0 }}
+            />
             <div>
               <div
                 style={{
                   fontSize: 12,
                   fontWeight: 600,
-                  color: "rgba(255,255,255,0.55)",
+                  color: "rgba(255,255,255,0.52)",
                 }}
               >
                 {t.name}
@@ -811,7 +753,7 @@ export function SystemsOrchestration() {
               <div
                 style={{
                   fontSize: 10,
-                  color: "rgba(255,255,255,0.25)",
+                  color: "rgba(255,255,255,0.22)",
                   marginTop: 2,
                 }}
               >
