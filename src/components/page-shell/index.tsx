@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { AnnouncementBar, SiteNav } from "@/components/site-nav";
+import { SiteNav } from "@/components/site-nav";
 
 type Props = {
   tag: string;
@@ -11,7 +11,6 @@ type Props = {
 export function PageShell({ tag, headline, sub, children }: Props) {
   return (
     <>
-      <AnnouncementBar />
       <SiteNav />
       {/* Inner page hero — cream bg, no parallax */}
       <div className="page-shell-hero">

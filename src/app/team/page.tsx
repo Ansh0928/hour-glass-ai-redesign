@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { AnnouncementBar, SiteNav } from "@/components/site-nav";
+import { SiteNav } from "@/components/site-nav";
 import { Logo } from "@/components/logo";
 import { TEAM_STATS } from "@/lib/stats";
 
@@ -50,7 +50,6 @@ const LinkedInIcon = () => (
 export default function TeamPage() {
   return (
     <div style={{ background: "var(--hero-bg)", minHeight: "100vh" }}>
-      <AnnouncementBar />
       <SiteNav />
 
       {/* Hero */}

@@ -13,42 +13,6 @@ const LINKS = [
   { label: "Team", href: "/team" },
 ];
 
-export function AnnouncementBar() {
-  return (
-    <div
-      style={{
-        background: "var(--green)",
-        color: "#fff",
-        textAlign: "center",
-        padding: "10px 24px",
-        fontSize: 13,
-        fontWeight: 500,
-        letterSpacing: "0.01em",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
-      }}
-    >
-      <span>Now in early access for Australian SMBs</span>
-      <span style={{ opacity: 0.6 }}>·</span>
-      <a
-        href="#"
-        style={{
-          color: "#fff",
-          fontWeight: 700,
-          textDecoration: "none",
-          display: "flex",
-          alignItems: "center",
-          gap: 4,
-        }}
-      >
-        Get access <span>→</span>
-      </a>
-    </div>
-  );
-}
-
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -72,7 +36,7 @@ export function SiteNav() {
       <nav
         style={{
           position: "fixed",
-          top: 34,
+          top: 0,
           left: 0,
           right: 0,
           zIndex: 200,
@@ -86,9 +50,7 @@ export function SiteNav() {
           borderBottom: scrolled
             ? "1px solid rgba(255,255,255,0.07)"
             : "1px solid transparent",
-          transform: hidden
-            ? "translateY(calc(-100% - 34px))"
-            : "translateY(0)",
+          transform: hidden ? "translateY(-100%)" : "translateY(0)",
           transition:
             "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
         }}

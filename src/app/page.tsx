@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useSidebarOpen } from "@/components/app-sidebar";
-import { AnnouncementBar, SiteNav } from "@/components/site-nav";
+import { SiteNav } from "@/components/site-nav";
 import type { ReactNode } from "react";
 import { animate, stagger, scrambleText } from "animejs";
 import {
@@ -34,6 +34,7 @@ import { SystemsOrchestration } from "@/components/ui/systems-orchestration";
 import { FileCard } from "@/components/ui/file-card-collections";
 import { IndustryWorkflow } from "@/components/ui/industry-workflow";
 import { ProcessSteps } from "@/components/process-steps";
+import { ProgramPopup } from "@/components/program-popup";
 
 /* ─── anime.js scroll reveal with stagger ─── */
 function useReveal() {
@@ -129,7 +130,7 @@ function Nav() {
       <nav
         style={{
           position: "fixed",
-          top: 34,
+          top: 0,
           left: 0,
           right: 0,
           zIndex: 200,
@@ -143,9 +144,7 @@ function Nav() {
           borderBottom: scrolled
             ? "1px solid rgba(255,255,255,0.07)"
             : "1px solid transparent",
-          transform: hidden
-            ? "translateY(calc(-100% - 34px))"
-            : "translateY(0)",
+          transform: hidden ? "translateY(-100%)" : "translateY(0)",
           transition:
             "transform 0.3s ease, background 0.3s ease, border-color 0.3s ease",
         }}
@@ -163,7 +162,7 @@ function Nav() {
                 href={l.href}
                 style={{
                   fontSize: 14,
-                  fontWeight: 450,
+                  fontWeight: 400,
                   color: "rgba(255,255,255,0.55)",
                   textDecoration: "none",
                   padding: "6px 14px",
@@ -213,7 +212,7 @@ function Nav() {
               href="#"
               style={{
                 fontSize: 14,
-                fontWeight: 450,
+                fontWeight: 400,
                 color: "rgba(255,255,255,0.55)",
                 textDecoration: "none",
                 padding: "10px 12px",
@@ -1435,7 +1434,6 @@ export default function Home() {
           .stats-section { padding: 0 20px 64px; }
         }
       `}</style>
-      <AnnouncementBar />
       <Nav />
 
       {/* ─── HERO ─── */}
@@ -1613,7 +1611,15 @@ export default function Home() {
         >
           Trusted by Australian businesses
         </p>
-        <div style={{ overflow: "hidden" }}>
+        <div
+          style={{
+            overflow: "hidden",
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          }}
+        >
           <div
             className="marquee-track"
             style={{
@@ -2610,8 +2616,7 @@ export default function Home() {
 
           <div className="homepage-footer-bottom">
             <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>
-              © 2025 Hourglass AI Pty Ltd · ABN 00 000 000 000 · Sydney,
-              Australia
+              © 2026 Hourglass AI. All rights reserved. · ACN 696 937 372
             </span>
             <div style={{ display: "flex", gap: 20 }}>
               {["Twitter", "LinkedIn", "Instagram"].map((s) => (
@@ -2638,6 +2643,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <ProgramPopup />
     </div>
   );
 }
