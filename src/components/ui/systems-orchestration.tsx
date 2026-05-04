@@ -588,7 +588,10 @@ export function SystemsOrchestration() {
       </div>
 
       {/* ══ ORCHESTRATION ══ */}
-      <div style={{ padding: "0 44px", marginTop: 40 }}>
+      <div
+        className="so-orch-section"
+        style={{ padding: "0 44px", marginTop: 40 }}
+      >
         {/* Connecting line topology */}
         <div style={{ position: "relative" }}>
           <svg width="100%" height="44" style={{ display: "block" }}>

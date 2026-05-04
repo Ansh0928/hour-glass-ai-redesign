@@ -399,17 +399,24 @@ body {
 
 @media (max-width: 767px) {
   .so-diagram-padding {
-    padding: 32px 0 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .so-diagram-padding::-webkit-scrollbar {
-    display: none;
+    padding: 32px 20px 0;
+    overflow-x: unset;
   }
   .so-diagram-grid {
-    display: grid;
-    min-width: 860px;
+    grid-template-columns: 1fr !important;
+    min-width: unset !important;
+  }
+  /* Hide left integrations + right features — inline display:flex needs !important */
+  .so-diagram-grid > div:first-child,
+  .so-diagram-grid > div:last-child {
+    display: none !important;
+  }
+  /* Hide animated SVG connection lines */
+  .so-diagram-padding > svg {
+    display: none !important;
+  }
+  .so-orch-section {
+    padding: 0 20px;
   }
   .so-agents-grid {
     grid-template-columns: repeat(2, 1fr);
