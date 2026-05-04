@@ -2121,7 +2121,7 @@ export default function Home() {
             >
               Go from &ldquo;I should learn AI&rdquo;
               <br />
-              <span style={{ color: "rgba(255,255,255,0.3)" }}>
+              <span style={{ color: "rgba(255,255,255,0.7)" }}>
                 to shipping in 4 weeks.
               </span>
             </h2>
@@ -2130,7 +2130,7 @@ export default function Home() {
             <p
               style={{
                 fontSize: 16,
-                color: "rgba(255,255,255,0.42)",
+                color: "rgba(255,255,255,0.7)",
                 lineHeight: 1.75,
                 margin: "0 auto 10px",
                 maxWidth: 480,
@@ -2142,7 +2142,7 @@ export default function Home() {
             <p
               style={{
                 fontSize: 14,
-                color: "rgba(255,255,255,0.25)",
+                color: "rgba(255,255,255,0.5)",
                 margin: "0 auto 36px",
                 letterSpacing: "0.01em",
               }}
@@ -2176,7 +2176,7 @@ export default function Home() {
               <span
                 style={{
                   fontSize: 13,
-                  color: "rgba(255,255,255,0.3)",
+                  color: "rgba(255,255,255,0.55)",
                   fontWeight: 400,
                 }}
               >
@@ -2211,8 +2211,8 @@ export default function Home() {
               <a
                 href="#"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  color: "rgba(255,255,255,0.5)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "rgba(255,255,255,0.75)",
                   padding: "14px 28px",
                   borderRadius: 40,
                   fontSize: 15,
