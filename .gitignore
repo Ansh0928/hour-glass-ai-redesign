@@ -28,3 +28,4 @@ npm-debug.log*
 .claude/
 .superpowers/
 .gstack/
+.vercel
