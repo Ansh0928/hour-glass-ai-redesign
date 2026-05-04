@@ -1,4 +1,5 @@
 import { PageShell } from "@/components/page-shell";
+import { HOURGLASS_STATS } from "@/lib/stats";
 
 const CASE_STUDIES = [
   {
@@ -66,12 +67,7 @@ const CASE_STUDIES = [
   },
 ];
 
-const AGGREGATE = [
-  { value: "186,000+", label: "Admin hours saved across customers" },
-  { value: "$4.2M+", label: "In overdue invoices recovered" },
-  { value: "99.2%", label: "Task accuracy rate" },
-  { value: "8 days", label: "Average payback period" },
-];
+const AGGREGATE = HOURGLASS_STATS;
 
 export default function ResultsPage() {
   return (
@@ -82,21 +78,13 @@ export default function ResultsPage() {
     >
       {/* Aggregate stats */}
       <section
+        className="results-section-padding"
         style={{
           background: "var(--glight)",
-          padding: "80px 40px",
           borderBottom: "1px solid var(--border)",
         }}
       >
-        <div
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 40,
-          }}
-        >
+        <div className="results-stats-grid">
           {AGGREGATE.map((s) => (
             <div key={s.label} style={{ textAlign: "center" }}>
               <div
@@ -123,7 +111,7 @@ export default function ResultsPage() {
       </section>
 
       {/* Case studies */}
-      <section style={{ padding: "100px 40px" }}>
+      <section className="results-cases-padding">
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p
             style={{
@@ -152,18 +140,7 @@ export default function ResultsPage() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
             {CASE_STUDIES.map((cs, i) => (
-              <div
-                key={cs.business}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1.4fr",
-                  gap: 0,
-                  border: "1px solid var(--border)",
-                  borderRadius: 20,
-                  overflow: "hidden",
-                  background: "white",
-                }}
-              >
+              <div key={cs.business} className="results-case-grid">
                 {/* Left — context */}
                 <div
                   style={{
@@ -300,9 +277,9 @@ export default function ResultsPage() {
 
       {/* ROI section */}
       <section
+        className="results-roi-padding"
         style={{
           background: "var(--glight)",
-          padding: "100px 40px",
           borderTop: "1px solid var(--border)",
           borderBottom: "1px solid var(--border)",
         }}
@@ -330,7 +307,7 @@ export default function ResultsPage() {
               fontFamily: "var(--font-playfair, Georgia, serif)",
             }}
           >
-            Most customers see ROI in 8 days.
+            First automation live in 30 days. 5+ hours back every week.
           </h2>
           <p
             style={{
@@ -345,31 +322,19 @@ export default function ResultsPage() {
             $1,190 per week — or $61,880 a year — going to tasks a Hourglass
             agent handles for a fraction of the cost.
           </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 2,
-              background: "var(--border)",
-              borderRadius: 16,
-              overflow: "hidden",
-            }}
-          >
+          <div className="results-roi-grid">
             {[
               {
                 label: "Your admin cost (est.)",
                 value: "$61,880 / yr",
-                dim: false,
               },
               {
                 label: "Hourglass subscription",
                 value: "From $299 / mo",
-                dim: false,
               },
               {
                 label: "You keep the difference",
                 value: "~$58,292 / yr",
-                dim: false,
               },
             ].map((item) => (
               <div
