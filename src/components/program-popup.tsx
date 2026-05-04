@@ -47,9 +47,9 @@ export function ProgramPopup() {
       <div
         className="program-popup"
         style={{
-          background: "rgba(255,255,255,0.04)",
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
+          background: "rgba(12,14,12,0.96)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           border: "1px solid rgba(255,255,255,0.10)",
           borderRadius: 18,
           padding: "20px 20px 18px",
