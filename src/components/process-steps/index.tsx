@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useState } from "react";
 import {
   Mail,
   FileText,
@@ -9,6 +9,7 @@ import {
   BarChart2,
   Bell,
 } from "lucide-react";
+import MagnifiedBento from "@/components/ui/magnified-bento";
 
 /* ─── Data ─── */
 const STEPS = [
@@ -83,16 +84,9 @@ const ORBITAL_NODES = [
   { label: "Follow-ups", Icon: Bell, angle: 300 },
 ];
 
-/* ─── Hourglass SVG (inline, from logo.tsx) ─── */
 function HourglassIcon({ size = 28 }: { size?: number }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <rect x="4" y="3" width="16" height="2" rx="1" fill="#fff" />
       <rect x="4" y="19" width="16" height="2" rx="1" fill="#fff" />
       <path d="M5 5 L19 5 L12 12 Z" fill="#fff" opacity="0.9" />
@@ -150,7 +144,7 @@ function AuditVisual() {
     <div
       style={{
         background: "#fff",
-        border: "1px solid var(--border-old, #e9ede9)",
+        border: "1px solid #e9ede9",
         borderRadius: 14,
         overflow: "hidden",
         width: "100%",
@@ -161,8 +155,8 @@ function AuditVisual() {
       <div
         style={{
           padding: "11px 16px",
-          borderBottom: "1px solid var(--color-border)",
-          background: "var(--color-bg)",
+          borderBottom: "1px solid #e9ede9",
+          background: "#fdfefb",
           display: "flex",
           alignItems: "center",
           gap: 6,
@@ -203,13 +197,13 @@ function AuditVisual() {
               padding: "9px 12px",
               borderRadius: 6,
               marginBottom: 5,
-              background: row.hi ? "#eef6dc" : "var(--color-surface)",
+              background: row.hi ? "#eef6dc" : "#f4f7ee",
             }}
           >
             <span
               style={{
                 fontSize: 12,
-                color: row.hi ? "#2b390a" : "var(--color-secondary)",
+                color: row.hi ? "#2b390a" : "#4a6d47",
                 fontWeight: row.hi ? 500 : 400,
               }}
             >
@@ -219,7 +213,7 @@ function AuditVisual() {
               style={{
                 fontSize: 12,
                 fontWeight: 700,
-                color: row.hi ? "#548f28" : "var(--color-secondary)",
+                color: row.hi ? "#548f28" : "#4a6d47",
               }}
             >
               {row.hrs}
@@ -230,7 +224,7 @@ function AuditVisual() {
       <div
         style={{
           padding: "11px 16px",
-          borderTop: "1px solid var(--color-border)",
+          borderTop: "1px solid #e9ede9",
           background: "#f4f7ee",
           display: "flex",
           justifyContent: "space-between",
@@ -270,12 +264,8 @@ function BuildVisual() {
         justifyContent: "center",
       }}
     >
-      {/* CSS keyframes — one counter-spin per starting angle so labels stay upright */}
       <style>{`
-        @keyframes hg-orbit-spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
+        @keyframes hg-orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes hg-counter-0   { from { transform: rotate(0deg); }    to { transform: rotate(-360deg); } }
         @keyframes hg-counter-60  { from { transform: rotate(-60deg); }  to { transform: rotate(-420deg); } }
         @keyframes hg-counter-120 { from { transform: rotate(-120deg); } to { transform: rotate(-480deg); } }
@@ -289,7 +279,6 @@ function BuildVisual() {
       `}</style>
 
       <div style={{ position: "relative", width: 300, height: 300 }}>
-        {/* Rings */}
         <div
           style={{
             position: "absolute",
@@ -317,7 +306,6 @@ function BuildVisual() {
           }}
         />
 
-        {/* Orbit spinner */}
         <div
           style={{
             position: "absolute",
@@ -348,7 +336,6 @@ function BuildVisual() {
                 transform: `rotate(${angle}deg) translateX(${RADIUS}px)`,
               }}
             >
-              {/* Green live dot */}
               <div
                 style={{
                   position: "absolute",
@@ -361,7 +348,6 @@ function BuildVisual() {
                   boxShadow: "0 0 5px rgba(84,143,40,0.9)",
                 }}
               />
-              {/* Counter-rotating content — per-angle keyframe keeps label upright */}
               <div
                 style={{
                   display: "flex",
@@ -392,7 +378,6 @@ function BuildVisual() {
           ))}
         </div>
 
-        {/* Hub ping ring */}
         <div
           style={{
             position: "absolute",
@@ -407,8 +392,6 @@ function BuildVisual() {
             zIndex: 1,
           }}
         />
-
-        {/* Hub */}
         <div
           style={{
             position: "absolute",
@@ -418,7 +401,7 @@ function BuildVisual() {
             width: 64,
             height: 64,
             borderRadius: "50%",
-            background: "var(--color-hero-bg)",
+            background: "var(--color-hero-bg, #1a2a0e)",
             border: "1.5px solid rgba(84,143,40,0.55)",
             display: "flex",
             alignItems: "center",
@@ -453,170 +436,84 @@ function BuildVisual() {
 }
 
 /* ─── Maintain right panel ─── */
-function MaintainVisual() {
-  const METRICS = [
-    { label: "Hours automated", value: "52 hrs", delta: "↑ 8%", good: true },
-    {
-      label: "Tasks handled by agents",
-      value: "340",
-      delta: "↑ 12%",
-      good: true,
-    },
-    { label: "Error rate", value: "0.3%", delta: "↓ 0.1%", good: true },
-    { label: "Agents deployed", value: "3 active", delta: null, good: true },
-  ];
-  return (
-    <div
-      style={{
-        background: "#fff",
-        border: "1px solid #e9ede9",
-        borderRadius: 14,
-        overflow: "hidden",
-        width: "100%",
-        maxWidth: 380,
-        boxShadow: "0 8px 32px rgba(43,57,10,0.10)",
-      }}
-    >
-      <div
-        style={{
-          padding: "11px 16px",
-          borderBottom: "1px solid var(--color-border)",
-          background: "var(--color-bg)",
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-        }}
-      >
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "#e9ede9",
-            }}
-          />
-        ))}
-        <span
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: "#4a6d47",
-            letterSpacing: "0.07em",
-            textTransform: "uppercase",
-            marginLeft: 6,
-          }}
-        >
-          Monthly performance
-        </span>
-      </div>
-      <div style={{ padding: "12px 14px" }}>
-        {METRICS.map((m) => (
-          <div
-            key={m.label}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "10px 12px",
-              borderRadius: 6,
-              marginBottom: 5,
-              background: "var(--color-surface)",
-            }}
-          >
-            <span style={{ fontSize: 12, color: "#4a6d47" }}>{m.label}</span>
-            <span style={{ fontSize: 13, fontWeight: 800, color: "#2b390a" }}>
-              {m.value}
-              {m.delta && (
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: "#548f28",
-                    marginLeft: 6,
-                  }}
-                >
-                  {m.delta}
-                </span>
-              )}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div
-        style={{
-          padding: "11px 16px",
-          borderTop: "1px solid var(--color-border)",
-          background: "#f4f7ee",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: "#4a6d47",
-            letterSpacing: "0.07em",
-            textTransform: "uppercase",
-          }}
-        >
-          Est. value generated
-        </span>
-        <span style={{ fontSize: 15, fontWeight: 800, color: "#2b390a" }}>
-          $6,240 / mo
-        </span>
-      </div>
-    </div>
-  );
-}
 
 /* ─── Main component ─── */
 export function ProcessSteps() {
   const [activeStep, setActiveStep] = useState(0);
-  const [activeSubItem, setActiveSubItem] = useState(0);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = useCallback(() => {
-    const el = wrapperRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const scrollable = el.offsetHeight - vh;
-    if (scrollable <= 0) return;
-    const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-    const totalSlots = STEPS.length * 3;
-    const slot = Math.min(Math.floor(progress * totalSlots), totalSlots - 1);
-    setActiveStep(Math.floor(slot / 3));
-    setActiveSubItem(slot % 3);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  const jumpToStep = (idx: number) => {
-    const el = wrapperRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const scrollable = el.offsetHeight - window.innerHeight;
-    const targetProgress = (idx * 3) / (STEPS.length * 3);
-    const target = window.scrollY + rect.top + targetProgress * scrollable;
-    window.scrollTo({ top: target, behavior: "smooth" });
-  };
 
   const step = STEPS[activeStep];
-  const rightBg = activeStep === 1 ? "var(--color-hero-bg)" : "#f4f7ee";
+  const isBuilding = activeStep === 1;
+  const rightBg = isBuilding ? "var(--color-hero-bg, #1a2a0e)" : "#f4f7ee";
 
   return (
     <>
-      {/* Inject CSS for dot grid on audit/maintain panels */}
       <style>{`
-        .hg-right-dotgrid::before {
+        .hg-section {
+          background: var(--surface-2);
+          border-bottom: 1px solid rgba(0,0,0,0.08);
+          padding: 0;
+        }
+        .hg-tab-bar {
+          border-bottom: 1px solid rgba(0,0,0,0.08);
+          background: var(--surface-2);
+        }
+        .hg-tab-bar-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          display: flex;
+          align-items: stretch;
+          padding: 0 40px;
+        }
+        .hg-tab-btn {
+          background: transparent;
+          border: none;
+          padding: 18px 32px 16px 0;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10;
+          border-bottom: 2px solid transparent;
+          margin-bottom: -1px;
+          transition: border-color 0.2s;
+        }
+        .hg-tab-btn[data-active="true"] {
+          border-bottom-color: var(--text);
+        }
+        .hg-content-wrap {
+          max-width: 1280px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 400px 1fr;
+          min-height: 520px;
+          padding: 0 40px;
+        }
+        .hg-left {
+          padding: 52px 48px 52px 0;
+          border-right: 1px solid rgba(0,0,0,0.08);
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .hg-right {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.35s ease;
+          overflow: hidden;
+          min-height: 400px;
+        }
+        .hg-right-inner {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 40px;
+        }
+        .hg-right-dots::before {
           content: '';
           position: absolute;
           inset: 0;
@@ -624,7 +521,7 @@ export function ProcessSteps() {
           background-size: 28px 28px;
           pointer-events: none;
         }
-        .hg-right-dotgrid-light::before {
+        .hg-right-dots-light::before {
           content: '';
           position: absolute;
           inset: 0;
@@ -632,287 +529,291 @@ export function ProcessSteps() {
           background-size: 28px 28px;
           pointer-events: none;
         }
+        .hg-point-row {
+          display: flex;
+          gap: 20px;
+          padding: 16px 0;
+          border-bottom: 1px solid rgba(0,0,0,0.07);
+          transition: opacity 0.25s;
+        }
         @media (max-width: 768px) {
-          .hg-content-grid { grid-template-columns: 1fr !important; }
-          .hg-right-panel { display: none !important; }
-          .hg-sticky { height: auto !important; position: relative !important; }
+          .hg-content-wrap { grid-template-columns: 1fr; padding: 0 20px; }
+          .hg-right { display: none; }
+          .hg-left { padding: 36px 0 36px; border-right: none; }
+          .hg-tab-bar-inner { padding: 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+          .hg-tab-bar-inner::-webkit-scrollbar { display: none; }
+          .hg-tab-btn { white-space: nowrap; padding-right: 24px; }
         }
       `}</style>
 
-      {/* 300vh scrollable wrapper */}
-      <div
-        ref={wrapperRef}
-        style={{ minHeight: "300vh", position: "relative" }}
-      >
-        {/* Sticky container */}
+      <section className="hg-section">
+        {/* Header */}
         <div
-          className="hg-sticky"
           style={{
-            position: "sticky",
-            top: 0,
-            height: "100vh",
-            overflow: "hidden",
-            background: "var(--surface-2)",
-            borderBottom: "1px solid rgba(0,0,0,0.08)",
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "72px 40px 48px",
           }}
         >
-          {/* Step nav */}
-          <div
+          <p
             style={{
-              borderBottom: "1px solid rgba(0,0,0,0.08)",
-              background: "var(--surface-2)",
+              fontSize: 11,
+              fontWeight: 700,
+              color: "var(--green, #16803c)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: 14,
             }}
           >
-            <div
-              style={{
-                maxWidth: 1280,
-                margin: "0 auto",
-                display: "flex",
-                alignItems: "stretch",
-                padding: "0 40px",
-              }}
-            >
-              {STEPS.map((s, i) => {
-                const isActive = i === activeStep;
-                const circ = 2 * Math.PI * 13;
-                return (
-                  <button
-                    key={i}
-                    onClick={() => jumpToStep(i)}
+            How it works
+          </p>
+          <h2
+            style={{
+              fontFamily: "var(--font-playfair, Georgia, serif)",
+              fontSize: "clamp(30px, 3.8vw, 52px)",
+              fontWeight: 700,
+              color: "var(--text)",
+              letterSpacing: "-0.04em",
+              lineHeight: 1.08,
+              maxWidth: 560,
+            }}
+          >
+            From chaos to clarity in three steps.
+          </h2>
+        </div>
+
+        {/* Tab bar */}
+        <div className="hg-tab-bar">
+          <div className="hg-tab-bar-inner">
+            {STEPS.map((s, i) => {
+              const isActive = i === activeStep;
+              const circ = 2 * Math.PI * 13;
+              return (
+                <button
+                  key={i}
+                  className="hg-tab-btn"
+                  data-active={String(isActive)}
+                  onClick={() => setActiveStep(i)}
+                  style={{
+                    gap: 10,
+                    paddingRight: i < STEPS.length - 1 ? 32 : 0,
+                  }}
+                >
+                  <svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 30"
+                    style={{ flexShrink: 0 }}
+                  >
+                    <circle
+                      cx="15"
+                      cy="15"
+                      r="13"
+                      fill="none"
+                      stroke={isActive ? "var(--text)" : "rgba(0,0,0,0.12)"}
+                      strokeWidth="1.5"
+                      strokeDasharray={
+                        isActive ? undefined : `${circ * 0.28} ${circ * 0.72}`
+                      }
+                      strokeLinecap="round"
+                      transform="rotate(-90 15 15)"
+                      style={{ transition: "all 0.35s" }}
+                    />
+                    <text
+                      x="15"
+                      y="15"
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize="9"
+                      fontWeight={isActive ? "700" : "500"}
+                      fill={isActive ? "var(--text)" : "rgba(0,0,0,0.35)"}
+                      fontFamily="inherit"
+                      style={{ transition: "all 0.2s" }}
+                    >
+                      {s.num}
+                    </text>
+                  </svg>
+                  <span
                     style={{
-                      background: "transparent",
-                      border: "none",
-                      padding: "16px 32px 14px 0",
-                      paddingRight: i < STEPS.length - 1 ? 32 : 0,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      borderBottom: isActive
-                        ? "2px solid var(--text)"
-                        : "2px solid transparent",
-                      marginBottom: -1,
+                      fontSize: 13,
+                      fontWeight: isActive ? 600 : 400,
+                      color: isActive ? "var(--text)" : "rgba(0,0,0,0.4)",
                       transition: "all 0.2s",
+                      letterSpacing: "-0.01em",
                     }}
                   >
-                    <svg
-                      width="30"
-                      height="30"
-                      viewBox="0 0 30 30"
-                      style={{ flexShrink: 0 }}
-                    >
-                      <circle
-                        cx="15"
-                        cy="15"
-                        r="13"
-                        fill="none"
-                        stroke={isActive ? "var(--text)" : "rgba(0,0,0,0.12)"}
-                        strokeWidth="1.5"
-                        strokeDasharray={
-                          isActive ? undefined : `${circ * 0.28} ${circ * 0.72}`
-                        }
-                        strokeLinecap="round"
-                        transform="rotate(-90 15 15)"
-                        style={{ transition: "all 0.35s" }}
-                      />
-                      <text
-                        x="15"
-                        y="15"
-                        textAnchor="middle"
-                        dominantBaseline="central"
-                        fontSize="9"
-                        fontWeight={isActive ? "700" : "500"}
-                        fill={isActive ? "var(--text)" : "rgba(0,0,0,0.35)"}
-                        fontFamily="inherit"
-                        style={{ transition: "all 0.2s" }}
-                      >
-                        {s.num}
-                      </text>
-                    </svg>
-                    <div
-                      style={{ display: "flex", alignItems: "center", gap: 8 }}
-                    >
-                      <span
-                        style={{
-                          fontSize: 13,
-                          fontWeight: isActive ? 600 : 400,
-                          color: isActive ? "var(--text)" : "rgba(0,0,0,0.4)",
-                          transition: "all 0.2s",
-                          letterSpacing: "-0.01em",
-                        }}
-                      >
-                        {s.label}
-                      </span>
-                      {isActive && (
-                        <span
-                          style={{
-                            fontSize: 11,
-                            color: "rgba(0,0,0,0.3)",
-                            fontWeight: 400,
-                          }}
-                        >
-                          {i + 1}&thinsp;/&thinsp;{STEPS.length}
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+                    {s.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* Content grid */}
-          <div
-            className="hg-content-grid"
-            style={{
-              maxWidth: 1280,
-              margin: "0 auto",
-              display: "grid",
-              gridTemplateColumns: "420px 1fr",
-              height: "calc(100vh - 57px)",
-              padding: "0 40px",
-            }}
-          >
-            {/* Left panel */}
-            <div
-              style={{
-                padding: "48px 48px 48px 0",
-                borderRight: "1px solid rgba(0,0,0,0.08)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                overflow: "hidden",
-              }}
-            >
-              <div>
-                <h2
-                  style={{
-                    fontFamily: "var(--font-playfair, Georgia, serif)",
-                    fontSize: "clamp(26px, 2.8vw, 38px)",
-                    fontWeight: 700,
-                    color: "var(--text)",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.15,
-                    marginBottom: 14,
-                    transition: "opacity 0.3s",
-                  }}
-                >
-                  {step.heading}
-                </h2>
-                <p
-                  style={{
-                    fontSize: 14,
-                    color: "var(--text-dim)",
-                    lineHeight: 1.65,
-                    marginBottom: 6,
-                  }}
-                >
-                  {step.meta.split("·").map((part, i) => (
-                    <span key={i}>
-                      {i > 0 && <span style={{ opacity: 0.4 }}> · </span>}
-                      {part.trim()}
-                    </span>
-                  ))}
-                </p>
-              </div>
+        {/* Content */}
+        <div className="hg-content-wrap">
+          {/* Left */}
+          <div className="hg-left">
+            <div style={{ marginBottom: 32 }}>
+              <h3
+                style={{
+                  fontFamily: "var(--font-playfair, Georgia, serif)",
+                  fontSize: "clamp(22px, 2.4vw, 34px)",
+                  fontWeight: 700,
+                  color: "var(--text)",
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.2,
+                  marginBottom: 10,
+                }}
+              >
+                {step.heading}
+              </h3>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: "var(--text-dim)",
+                  lineHeight: 1.6,
+                }}
+              >
+                {step.meta.split("·").map((part, i) => (
+                  <span key={i}>
+                    {i > 0 && <span style={{ opacity: 0.4 }}> · </span>}
+                    {part.trim()}
+                  </span>
+                ))}
+              </p>
+            </div>
 
-              {/* Sub-items */}
-              <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
-                {step.points.map((point, i) => {
-                  const isOpen = i === activeSubItem;
-                  return (
+            <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+              {step.points.map((point, i) => (
+                <div key={point.title} className="hg-point-row">
+                  <span
+                    style={{
+                      fontSize: 12,
+                      color: "rgba(0,0,0,0.25)",
+                      fontWeight: 600,
+                      flexShrink: 0,
+                      paddingTop: 2,
+                      minWidth: 18,
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <div>
                     <div
-                      key={point.title}
                       style={{
-                        display: "flex",
-                        gap: 20,
-                        padding: "16px 0",
-                        borderBottom: "1px solid rgba(0,0,0,0.08)",
-                        cursor: "default",
-                        transition: "opacity 0.2s",
-                        opacity: isOpen ? 1 : 0.45,
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: "var(--text)",
+                        marginBottom: 5,
                       }}
                     >
-                      <span
-                        style={{
-                          fontSize: 13,
-                          color: isOpen ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.2)",
-                          fontWeight: 500,
-                          flexShrink: 0,
-                          paddingTop: 1,
-                          minWidth: 16,
-                          transition: "color 0.2s",
-                        }}
-                      >
-                        {i + 1}
-                      </span>
-                      <div>
-                        <div
-                          style={{
-                            fontSize: 14,
-                            fontWeight: isOpen ? 700 : 500,
-                            color: "var(--text)",
-                            marginBottom: isOpen ? 6 : 0,
-                            transition: "font-weight 0.2s, margin 0.2s",
-                          }}
-                        >
-                          {point.title}
-                        </div>
-                        {isOpen && (
-                          <div
-                            style={{
-                              fontSize: 13,
-                              color: "var(--text-dim)",
-                              lineHeight: 1.65,
-                            }}
-                          >
-                            {point.body}
-                          </div>
-                        )}
-                      </div>
+                      {point.title}
                     </div>
-                  );
-                })}
-              </div>
+                    <div
+                      style={{
+                        fontSize: 13,
+                        color: "var(--text-dim)",
+                        lineHeight: 1.65,
+                      }}
+                    >
+                      {point.body}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Right panel */}
-            <div
-              className={
-                activeStep === 1
-                  ? "hg-right-panel hg-right-dotgrid"
-                  : "hg-right-panel hg-right-dotgrid-light"
-              }
-              style={{
-                position: "relative",
-                background: rightBg,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "background 0.4s ease",
-                overflow: "hidden",
-              }}
-            >
-              <div
+            {/* Step nav arrows */}
+            <div style={{ display: "flex", gap: 10, marginTop: 32 }}>
+              <button
+                onClick={() => setActiveStep((s) => Math.max(0, s - 1))}
+                disabled={activeStep === 0}
                 style={{
-                  position: "relative",
-                  zIndex: 1,
-                  width: "100%",
-                  height: "100%",
+                  width: 36,
+                  height: 36,
+                  borderRadius: 8,
+                  border: "1px solid rgba(0,0,0,0.1)",
+                  background: "transparent",
+                  cursor: activeStep === 0 ? "not-allowed" : "pointer",
+                  opacity: activeStep === 0 ? 0.3 : 1,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: 40,
+                  transition: "opacity 0.2s",
                 }}
               >
-                {activeStep === 0 && <AuditVisual />}
-                {activeStep === 1 && <BuildVisual />}
-                {activeStep === 2 && <MaintainVisual />}
-              </div>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M9 2L4 7L9 12"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() =>
+                  setActiveStep((s) => Math.min(STEPS.length - 1, s + 1))
+                }
+                disabled={activeStep === STEPS.length - 1}
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 8,
+                  border: "1px solid rgba(0,0,0,0.1)",
+                  background: "transparent",
+                  cursor:
+                    activeStep === STEPS.length - 1 ? "not-allowed" : "pointer",
+                  opacity: activeStep === STEPS.length - 1 ? 0.3 : 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "opacity 0.2s",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M5 2L10 7L5 12"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "rgba(0,0,0,0.3)",
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: 4,
+                }}
+              >
+                {activeStep + 1} / {STEPS.length}
+              </span>
+            </div>
+          </div>
+
+          {/* Right */}
+          <div
+            className={
+              isBuilding
+                ? "hg-right hg-right-dots"
+                : "hg-right hg-right-dots-light"
+            }
+            style={{ background: rightBg }}
+          >
+            <div className="hg-right-inner">
+              {activeStep === 0 && <AuditVisual />}
+              {activeStep === 1 && <BuildVisual />}
+              {activeStep === 2 && <MagnifiedBento />}
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }
