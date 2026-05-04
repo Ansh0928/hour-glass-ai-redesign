@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { TimelineContent } from "@/components/ui/timeline-animation";
+import { useIsMobile } from "@/components/hooks/use-mobile";
 
 const TESTIMONIALS = [
   {
@@ -79,6 +80,7 @@ const revealVariants = {
 
 export function Testimonials() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const [t0, t1, t2, t3, t4] = TESTIMONIALS;
 
   return (
@@ -146,7 +148,7 @@ export function Testimonials() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
             gap: 12,
           }}
         >

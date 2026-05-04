@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useIsMobile } from "@/components/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -268,6 +269,7 @@ const stepVariant = {
 
 export function IndustryWorkflow() {
   const [activeId, setActiveId] = useState<IndustryId>("trades");
+  const isMobile = useIsMobile();
 
   const industry = INDUSTRIES.find((i) => i.id === activeId)!;
 
@@ -461,7 +463,14 @@ export function IndustryWorkflow() {
           </div>
 
           {/* Steps */}
-          <div style={{ padding: "32px 24px" }}>
+          <div
+            style={{
+              padding: "32px 24px",
+              overflowX: isMobile ? "auto" : "visible",
+              WebkitOverflowScrolling:
+                "touch" as React.CSSProperties["WebkitOverflowScrolling"],
+            }}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeId}
@@ -471,7 +480,9 @@ export function IndustryWorkflow() {
                 exit="exit"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: `repeat(${industry.steps.length}, 1fr)`,
+                  gridTemplateColumns: isMobile
+                    ? `repeat(${industry.steps.length}, minmax(160px, 1fr))`
+                    : `repeat(${industry.steps.length}, 1fr)`,
                   gap: 0,
                   position: "relative",
                 }}

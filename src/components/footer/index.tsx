@@ -1,24 +1,39 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 export function Footer() {
   const cols = [
     {
       heading: "Product",
-      links: ["Features", "Agents", "Integrations", "Pricing", "Changelog"],
+      links: [
+        { label: "Features", href: "#" },
+        { label: "Agents", href: "/agents" },
+        { label: "Integrations", href: "#" },
+        { label: "Results", href: "/results" },
+        { label: "Pricing", href: "#" },
+        { label: "Changelog", href: "#" },
+      ],
     },
     {
       heading: "Company",
-      links: ["About", "Blog", "Careers", "Press", "Contact"],
+      links: [
+        { label: "About", href: "#" },
+        { label: "Blog", href: "#" },
+        { label: "Careers", href: "#" },
+        { label: "Press", href: "#" },
+        { label: "Contact", href: "#" },
+      ],
     },
     {
       heading: "Legal",
       links: [
-        "Privacy Policy",
-        "Terms of Service",
-        "Security",
-        "Cookie Policy",
+        { label: "Privacy Policy", href: "#" },
+        { label: "Terms of Service", href: "#" },
+        { label: "Security", href: "#" },
+        { label: "Cookie Policy", href: "#" },
       ],
     },
   ];
@@ -70,13 +85,13 @@ export function Footer() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            padding: "0 40px",
+            padding: "0 24px",
             textAlign: "center",
           }}
         >
           <h2
             style={{
-              fontSize: "clamp(40px, 6vw, 88px)",
+              fontSize: "clamp(36px, 6vw, 88px)",
               fontWeight: 700,
               color: "white",
               letterSpacing: "-0.04em",
@@ -104,7 +119,10 @@ export function Footer() {
             Join 200+ Australian businesses that run their back office on
             autopilot. Free 14-day trial, no credit card required.
           </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+          <div
+            className="footer-cta-buttons"
+            style={{ display: "flex", gap: 12, justifyContent: "center" }}
+          >
             <a
               href="#"
               style={{
@@ -139,58 +157,17 @@ export function Footer() {
       </section>
 
       <footer
+        className="footer-padding"
         style={{
           background: "var(--hero-bg)",
           borderTop: "1px solid rgba(255,255,255,0.08)",
-          padding: "64px 40px 40px",
         }}
       >
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
-              gap: 40,
-              marginBottom: 48,
-            }}
-          >
+          <div className="footer-grid" style={{ marginBottom: 48 }}>
             <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  marginBottom: 12,
-                }}
-              >
-                <div
-                  style={{
-                    width: 28,
-                    height: 28,
-                    background: "var(--green)",
-                    borderRadius: 6,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M8 2C5.8 2 4 3.6 4 5.6c0 1.2.6 2.4 1.6 3.2L4 13h8l-1.6-4.2C11.4 8 12 6.8 12 5.6 12 3.6 10.2 2 8 2z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <span
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 17,
-                    color: "white",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Hourglass
-                </span>
+              <div style={{ marginBottom: 12 }}>
+                <Logo color="white" size={22} />
               </div>
               <p
                 style={{
@@ -222,9 +199,9 @@ export function Footer() {
                   style={{ display: "flex", flexDirection: "column", gap: 10 }}
                 >
                   {col.links.map((link) => (
-                    <a
-                      key={link}
-                      href="#"
+                    <Link
+                      key={link.label}
+                      href={link.href}
                       style={{
                         fontSize: 14,
                         color: "rgba(255,255,255,0.55)",
@@ -238,8 +215,8 @@ export function Footer() {
                         (e.currentTarget.style.color = "rgba(255,255,255,0.55)")
                       }
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -247,17 +224,14 @@ export function Footer() {
           </div>
 
           <div
+            className="footer-bottom"
             style={{
               borderTop: "1px solid rgba(255,255,255,0.08)",
               paddingTop: 24,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
             }}
           >
             <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
-              © 2025 Hourglass AI Pty Ltd. ABN 00 000 000 000. Sydney,
-              Australia.
+              © 2026 Hourglass AI Pty Ltd · Melbourne & Sydney · ACN 696 937 372
             </span>
             <div style={{ display: "flex", gap: 16 }}>
               {["Twitter", "LinkedIn", "Instagram"].map((s) => (
