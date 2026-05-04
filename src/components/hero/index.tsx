@@ -30,6 +30,7 @@ export function Hero() {
 
   return (
     <section
+      className="hero-section"
       style={{
         background: "var(--hero-bg)",
         minHeight: "100vh",
@@ -40,10 +41,19 @@ export function Hero() {
         overflow: "hidden",
       }}
     >
+      <style>{`
+        @media (max-width: 767px) {
+          .hero-section { padding: 0 20px; }
+          .hero-grid { grid-template-columns: 1fr !important; padding-top: 100px !important; }
+          .hero-mockup { display: none; }
+        }
+      `}</style>
+
       {/* 4-layer cinematic parallax background */}
       <ParallaxScene />
 
       <div
+        className="hero-grid"
         style={{
           maxWidth: 1100,
           margin: "0 auto",
@@ -180,6 +190,7 @@ export function Hero() {
         {/* Right — mockup with parallax */}
         <div
           ref={mockupRef}
+          className="hero-mockup"
           style={{
             transform: "rotate(-2deg)",
             transformOrigin: "center center",
