@@ -14,10 +14,28 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://hourglassai.com.au";
+
 export const metadata: Metadata = {
   title: "Hourglass AI — Your admin, handled by AI",
   description:
     "AI agents that handle your emails, invoices, scheduling and follow-ups so you can focus on growing your business.",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "Hourglass AI — Your admin, handled by AI",
+    description:
+      "AI agents that handle your emails, invoices, scheduling and follow-ups so you can focus on growing your business.",
+    url: siteUrl,
+    siteName: "Hourglass AI",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hourglass AI — Your admin, handled by AI",
+    description:
+      "AI agents that handle your emails, invoices, scheduling and follow-ups so you can focus on growing your business.",
+  },
 };
 
 export default function RootLayout({

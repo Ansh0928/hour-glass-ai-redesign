@@ -29,3 +29,9 @@ npm-debug.log*
 .superpowers/
 .gstack/
 .vercel
+
+# Internal / design assets
+hero section.png
+melbourne.html
+CLAUDE.md
+docs/superpowers/
