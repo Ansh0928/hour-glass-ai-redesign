@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { Nav } from "@/components/nav";
+import { AnnouncementBar, SiteNav } from "@/components/site-nav";
 
 type Props = {
   tag: string;
@@ -11,17 +11,10 @@ type Props = {
 export function PageShell({ tag, headline, sub, children }: Props) {
   return (
     <>
-      <Nav />
+      <AnnouncementBar />
+      <SiteNav />
       {/* Inner page hero — cream bg, no parallax */}
-      <div
-        style={{
-          background: "var(--hero-bg)",
-          paddingTop: 140,
-          paddingBottom: 80,
-          paddingLeft: 40,
-          paddingRight: 40,
-        }}
-      >
+      <div className="page-shell-hero">
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p
             style={{
